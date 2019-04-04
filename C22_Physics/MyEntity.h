@@ -6,6 +6,7 @@ Date: 2017/07
 #define __MYENTITY_H_
 
 #include "MySolver.h"
+using namespace std;
 
 namespace Simplex
 {
@@ -32,6 +33,10 @@ class MyEntity
 
 	MySolver* m_pSolver = nullptr; //Physics MySolver
 
+	 string type = "";
+
+	 vector3 direction = vector3();
+
 public:
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
@@ -40,7 +45,7 @@ public:
 	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
 	Output: class object instance
 	*/
-	MyEntity(String a_sFileName, String a_sUniqueID = "NA");
+	MyEntity(String a_sFileName, string type, String a_sUniqueID = "NA");
 	/*
 	Usage: Copy Constructor
 	Arguments: class object to copy
