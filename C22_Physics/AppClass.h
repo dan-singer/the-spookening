@@ -6,6 +6,7 @@ Date: 2017/06
 #define __APPLICATIONCLASS_H_
 
 #include "Definitions.h"
+#include "Simplex/Mesh/Mesh.h"
 
 #include "ControllerConfiguration.h"
 #include "imgui\ImGuiObject.h"
@@ -19,6 +20,7 @@ class Application
 {
 	MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 private:
+	//TODO update
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
 
 	static ImGuiObject gui; //GUI object
@@ -55,6 +57,8 @@ private:
 	sf::SoundBuffer m_soundBuffer; //buffer to play sound from
 	sf::Sound m_sound; //sound effect
 	sf::Music m_soundBGM; //background music
+
+	MyEntity* m_player;
 
 public:
 #pragma region Constructor / Run / Destructor
