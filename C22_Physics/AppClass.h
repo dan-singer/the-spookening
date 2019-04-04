@@ -59,6 +59,7 @@ private:
 	sf::Music m_soundBGM; //background music
 
 	MyEntity* m_player;
+	vector3 m_cameraOffset;
 
 public:
 #pragma region Constructor / Run / Destructor

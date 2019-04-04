@@ -90,7 +90,8 @@ vector3 RoundSmallVelocity(vector3 a_v3Velocity, float minVelocity = 0.01f)
 }
 void MySolver::Update(void)
 {
-	ApplyForce(vector3(0.0f, -0.035f, 0.0f));
+	//TO DO: fix gravity to not work on player or ground but to work on everything else
+	//ApplyForce(vector3(0.0f, -0.035f, 0.0f));
 
 	m_v3Velocity += m_v3Acceleration;
 	

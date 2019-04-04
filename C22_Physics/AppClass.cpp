@@ -9,6 +9,17 @@ void Application::InitVariables(void)
 	m_pEntityMngr->UsePhysicsSolver();
 
 	m_player = m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("Player"));
+
+	m_player->SetPosition(vector3(0, 10, 0));
+
+	m_cameraOffset = vector3(0, 10, 0);
+
+	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "ground");
+	vector3 v3Position = vector3(-5,0,-5);
+	v3Position.y = 0.0f;
+	matrix4 m4Position = glm::translate(v3Position);
+	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(10, 1, 10)));
+	m_pEntityMngr->UsePhysicsSolver();
 	
 }
 void Application::Update(void)
@@ -20,7 +31,7 @@ void Application::Update(void)
 	//ArcBall();
 
 
-	vector3 camPosition = m_player->GetPosition() + vector3(0, 10, 0);
+	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
 	//Set the position and target of the camera
 	m_pCameraMngr->SetPositionTargetAndUpward(
