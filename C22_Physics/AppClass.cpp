@@ -11,7 +11,7 @@ void Application::InitVariables(void)
 	m_player = m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("Player"));
 	float playerScale = 0.01f;
 	m_player->SetModelMatrix(glm::translate(vector3(-7.5f, 100, -7.5f)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
-	m_cameraOffset = vector3(0, 10, 0);
+	m_cameraOffset = vector3(0, 6, 0);
 	
 
 	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "ground");
@@ -20,7 +20,12 @@ void Application::InitVariables(void)
 	matrix4 m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(100, 1, 100)));
 	m_pEntityMngr->UsePhysicsSolver(false);
+
+	m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig", "Pig");
+	m_pEntityMngr->UsePhysicsSolver(false);
+	m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
 	
+
 }
 void Application::Update(void)
 {

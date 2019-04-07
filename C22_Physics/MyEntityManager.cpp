@@ -188,10 +188,10 @@ void Simplex::MyEntityManager::Update(void)
 		m_mEntityArray[i]->Update();
 	}
 }
-void Simplex::MyEntityManager::AddEntity(String a_sFileName, String a_sUniqueID)
+void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String a_sUniqueID)
 {
 	//Create a temporal entity to store the object
-	MyEntity* pTemp = new MyEntity(a_sFileName, a_sUniqueID);
+	MyEntity* pTemp = new MyEntity(a_sFileName, name, a_sUniqueID);
 	//if I was able to generate it add it to the list
 	if (pTemp->IsInitialized())
 	{

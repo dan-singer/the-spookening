@@ -1,5 +1,8 @@
 #include "MyEntity.h"
 using namespace Simplex;
+#include <stdlib.h>
+#include <time.h>
+
 std::map<String, MyEntity*> MyEntity::m_IDMap;
 //  Accessors
 Simplex::MySolver* Simplex::MyEntity::GetSolver(void) { return m_pSolver; }
@@ -103,7 +106,7 @@ void Simplex::MyEntity::Release(void)
 	m_IDMap.erase(m_sUniqueID);
 }
 //The big 3
-Simplex::MyEntity::MyEntity(String a_sFileName, String a_sUniqueID)
+Simplex::MyEntity::MyEntity(String a_sFileName, string type, String a_sUniqueID)
 {
 	Init();
 	m_pModel = new Model();
@@ -118,6 +121,29 @@ Simplex::MyEntity::MyEntity(String a_sFileName, String a_sUniqueID)
 		m_bInMemory = true; //mark this entity as viable
 	}
 	m_pSolver = new MySolver();
+	this->type = type;
+
+
+
+	if (type == "Pig")
+	{
+		srand(time(NULL));
+		SetPosition(GetPosition() + vector3(0.0f, 0.0f, 0.0f));
+		// cout<< rand() % 100 << endl;
+		direction = vector3(rand() % 2, rand() % 2, 0);
+		// cout << direction.x << ", " << direction.y << endl; // change from y to z
+
+		rotAngle = rand() % 361;
+		// cout << "RotAngle: " << rotAngle << endl;
+
+		position = vector3(rand() % 20, 0, rand() % 20);
+		// cout << "Pos: " << position.x << ", " << position.y << ", " << position.z << endl;
+
+		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, glm::radians(rotAngle), AXIS_Y);
+		this->SetModelMatrix(mRot);
+
+		// for collision swap x and z and negate 
+	}
 }
 Simplex::MyEntity::MyEntity(MyEntity const& other)
 {
@@ -309,10 +335,8 @@ void Simplex::MyEntity::Update(void)
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->Update();
-		//quaternion rotation;
-		//glm::decompose(GetModelMatrix(), vector3(0), rotation, vector3(0), vector3(0), vector4(0));
-		//TODO DON'T HARDCODE THIS ASK ALBERDO HOW TO FIX THIS DON'T LEAVE THIS HERE PLS
-		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
+		// SetPosition(GetPosition() + direction);
+		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
 	}
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
