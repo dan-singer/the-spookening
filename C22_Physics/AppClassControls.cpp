@@ -416,22 +416,22 @@ void Application::ProcessKeyboard(void)
 	float fDelta = m_pSystem->GetDeltaTime(0);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		m_pEntityMngr->ApplyForce(vector3(-2.0f * fDelta, 0.0f, 0.0f), "Player");
+		m_player->SetModelMatrix(glm::translate(vector3(-20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		m_pEntityMngr->ApplyForce(vector3(2.0f * fDelta, 0.0f, 0.0f), "Player");
+		m_player->SetModelMatrix(glm::translate(vector3(20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		m_pEntityMngr->ApplyForce(vector3(0.0f, 0.0f, -2.0f * fDelta), "Player");
+		m_player->SetModelMatrix(glm::translate(vector3(0, 0, -20.0f * fDelta)) * m_player->GetModelMatrix());
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		m_pEntityMngr->ApplyForce(vector3(0.0f, 0.0f, 2.0f * fDelta), "Player");
+		m_player->SetModelMatrix(glm::translate(vector3(0, 0, 20.0f * fDelta)) * m_player->GetModelMatrix());
 	}
 #pragma endregion
 }
