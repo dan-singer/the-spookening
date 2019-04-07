@@ -309,7 +309,10 @@ void Simplex::MyEntity::Update(void)
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->Update();
-		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
+		//quaternion rotation;
+		//glm::decompose(GetModelMatrix(), vector3(0), rotation, vector3(0), vector3(0), vector4(0));
+		//TODO DON'T HARDCODE THIS ASK ALBERDO HOW TO FIX THIS DON'T LEAVE THIS HERE PLS
+		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
 	}
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
