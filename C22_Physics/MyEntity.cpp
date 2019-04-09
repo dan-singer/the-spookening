@@ -2,6 +2,7 @@
 using namespace Simplex;
 #include <stdlib.h>
 #include <time.h>
+using namespace std;
 
 std::map<String, MyEntity*> MyEntity::m_IDMap;
 //  Accessors
@@ -128,18 +129,37 @@ Simplex::MyEntity::MyEntity(String a_sFileName, string type, String a_sUniqueID)
 	if (type == "Pig")
 	{
 		srand(time(NULL));
-		SetPosition(GetPosition() + vector3(0.0f, 0.0f, 0.0f));
-		// cout<< rand() % 100 << endl;
-		direction = vector3(rand() % 2, rand() % 2, 0);
-		// cout << direction.x << ", " << direction.y << endl; // change from y to z
-
-		rotAngle = rand() % 361;
-		// cout << "RotAngle: " << rotAngle << endl;
+		direction = vector3(rand() % 2, 0, rand() % 2);
+		// cout << direction.x << ", " << direction.z << endl;
+		if (direction.x == 0 && direction.z == 0)
+		{
+			if (rand() % 2 > 0)
+			{
+				direction.x = 1;
+			}
+			else
+			{
+				direction.z = 1;
+			}
+		}
+		// rotAngle = rand() % 361;
 
 		position = vector3(rand() % 20, 0, rand() % 20);
-		// cout << "Pos: " << position.x << ", " << position.y << ", " << position.z << endl;
-
-		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, glm::radians(rotAngle), AXIS_Y);
+		if (rand() % 2 > 0)
+		{
+			direction.x = -direction.x;
+		}
+		if (rand() % 2 > 0)
+		{
+			direction.z = -direction.z;
+		}
+		cout << direction.x  << ", "<< direction.z << endl;
+		/*float dotProd = -1 * direction.z;
+		float determinate = (direction.x * direction.x) + (direction.y * direction.y) + (direction.z* direction.z);
+		float det2 = 1;*/
+		// rotAngle = acos(dotProd / sqrt(determinate * det2));
+		rotAngle = atan(direction.x / direction.z);
+		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, (rotAngle), AXIS_Y);
 		this->SetModelMatrix(mRot);
 
 		// for collision swap x and z and negate 
@@ -335,9 +355,17 @@ void Simplex::MyEntity::Update(void)
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->Update();
-		// SetPosition(GetPosition() + direction);
 		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
 	}
+	if (type == "Pig")
+	{
+		position = vector3(position + (direction * 1/50.0f));
+		// cout << "Pos: " << position.x << ", " << position.y << ", " << position.z << endl;
+
+		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, glm::radians(rotAngle), AXIS_Y);
+		this->SetModelMatrix(mRot * glm::scale(vector3(5)));
+	}
+	
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 {

@@ -40,7 +40,6 @@ class MyEntity
 	 vector3 position = vector3();
 
 	 float rotAngle = 0.0f;
-
 public:
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
@@ -49,6 +48,7 @@ public:
 	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
 	Output: class object instance
 	*/
+	// MyEntity(String a_sFileName, string type, String a_sUniqueID);
 	MyEntity(String a_sFileName, string type, String a_sUniqueID = "NA");
 	/*
 	Usage: Copy Constructor

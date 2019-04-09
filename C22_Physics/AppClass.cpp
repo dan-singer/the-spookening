@@ -24,8 +24,6 @@ void Application::InitVariables(void)
 	m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig", "Pig");
 	m_pEntityMngr->UsePhysicsSolver(false);
 	m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
-	
-
 }
 void Application::Update(void)
 {
