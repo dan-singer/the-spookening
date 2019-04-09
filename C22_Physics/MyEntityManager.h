@@ -45,6 +45,14 @@ public:
 	*/
 	void AddEntity(String a_sFileName, string name, String a_sUniqueID = "NA");
 	/*
+	USAGE: Will add an entity to the list
+	ARGUMENTS:
+	-	String a_sFileName -> Name of the model to load
+	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
+	OUTPUT: ---
+	*/
+	void AddEntity(MyEntity* entity);
+	/*
 	USAGE: Deletes the MyEntity Specified by unique ID and removes it from the list
 	ARGUMENTS: uint a_uIndex -> index of the queried entry, if < 0 asks for the last one added
 	OUTPUT: ---

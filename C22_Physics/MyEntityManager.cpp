@@ -192,8 +192,13 @@ void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String
 {
 	//Create a temporal entity to store the object
 	MyEntity* pTemp = new MyEntity(a_sFileName, name, a_sUniqueID);
+	AddEntity(pTemp);
+}
+
+void Simplex::MyEntityManager::AddEntity(MyEntity* entity)
+{
 	//if I was able to generate it add it to the list
-	if (pTemp->IsInitialized())
+	if (entity->IsInitialized())
 	{
 		//create a new temp array with one extra entry
 		PEntity* tempArray = new PEntity[m_uEntityCount + 1];
@@ -204,7 +209,7 @@ void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String
 			tempArray[uCount] = m_mEntityArray[i];
 			++uCount;
 		}
-		tempArray[uCount] = pTemp;
+		tempArray[uCount] = entity;
 		//if there was an older array delete
 		if (m_mEntityArray)
 		{
@@ -216,6 +221,7 @@ void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String
 		++m_uEntityCount;
 	}
 }
+
 void Simplex::MyEntityManager::RemoveEntity(uint a_uIndex)
 {
 	//if the list is empty return
