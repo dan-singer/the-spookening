@@ -4,7 +4,7 @@ void Application::InitVariables(void)
 {
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
-	m_player = new Player("Chicken\\gallina.fbx", "Player");
+	m_player = new Player("Chicken\\gallina.fbx", "", "Player");
 	m_pEntityMngr->AddEntity(m_player);
 
 	m_pEntityMngr->UsePhysicsSolver(false);
@@ -14,7 +14,7 @@ void Application::InitVariables(void)
 	m_cameraOffset = vector3(0, 6, 0);
 	
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "ground");
+	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	vector3 v3Position = vector3(-5,0,-5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);
@@ -25,8 +25,6 @@ void Application::InitVariables(void)
 	m_pEntityMngr->UsePhysicsSolver(false);
 	m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
 
-	m_clock = m_pSystem->GenClock();
-	
 
 }
 void Application::Update(void)
@@ -45,11 +43,6 @@ void Application::Update(void)
 		camPosition, //Position
 		m_player->GetPosition(),	//Target
 		-AXIS_Z);					//Up
-
-
-	float fDelta = m_pSystem->GetDeltaTime(m_clock);
-
-	m_player->Update(fDelta);
 
 	//Update Entity Manager
 	m_pEntityMngr->Update();

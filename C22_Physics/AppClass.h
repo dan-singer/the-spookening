@@ -62,7 +62,6 @@ private:
 
 	Player* m_player;
 	vector3 m_cameraOffset;
-	uint m_clock;
 
 public:
 #pragma region Constructor / Run / Destructor

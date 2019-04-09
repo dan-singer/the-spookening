@@ -1,5 +1,5 @@
 #include "Player.h"
-
+#include "MyEntityManager.h"
 using namespace Simplex;
 
 Player::Player(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a_sFileName, type, a_sUniqueID)
@@ -16,8 +16,12 @@ void Simplex::Player::DropEgg()
 	if (m_fCooldownTimer <= 0)
 	{		
 		// Spawn an egg
-		std::cout << "Spawning an egg" << std::endl;
-		EntityManager::GetInstance()->AddEntity("Minecraft\\Cube.obj", "ground");
+		MyEntityManager* manager = MyEntityManager::GetInstance();
+		Egg* toDrop = new Egg("Minecraft\\Cube.obj", "");
+		manager->AddEntity(toDrop);
+		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(0, -2, 0)));
+		manager->UsePhysicsSolver(false);
+
 		m_fCooldownTimer = m_fStartingTimer;
 	}
 }
@@ -25,4 +29,5 @@ void Simplex::Player::DropEgg()
 
 Player::~Player()
 {
+	std::cout << "Player destructor!\n";
 }

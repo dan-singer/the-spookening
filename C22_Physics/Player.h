@@ -3,6 +3,7 @@
 
 #include "Definitions.h"
 #include "MyEntity.h"
+#include "Egg.h"
 
 namespace Simplex
 {
@@ -13,7 +14,7 @@ namespace Simplex
 		float m_fStartingTimer = 1.0f;
 	public:
 		Player(String a_sFileName, string type, String a_sUniqueID = "NA");
-		virtual void Update(float deltaTime);
+		virtual void Update(float deltaTime) override;
 		virtual void DropEgg();
 		virtual ~Player();
 	};

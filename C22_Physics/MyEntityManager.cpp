@@ -6,6 +6,7 @@ void Simplex::MyEntityManager::Init(void)
 {
 	m_uEntityCount = 0;
 	m_mEntityArray = nullptr;
+	m_clock = SystemSingleton::GetInstance()->GenClock();
 }
 void Simplex::MyEntityManager::Release(void)
 {
@@ -167,10 +168,12 @@ Simplex::MyEntityManager::~MyEntityManager(){Release();};
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
-	//Clear all collisions
+	//Clear all collisions and update all entities
+	float fDelta = SystemSingleton::GetInstance()->GetDeltaTime(m_clock);
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		m_mEntityArray[i]->ClearCollisionList();
+		m_mEntityArray[i]->Update(fDelta);
 	}
 	
 	//check collisions

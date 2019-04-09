@@ -17,6 +17,8 @@ class MyEntityManager
 	uint m_uEntityCount = 0; //number of elements in the list
 	PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
 	static MyEntityManager* m_pInstance; // Singleton pointer
+
+	uint m_clock;
 public:
 	/*
 	Usage: Gets the singleton pointer
