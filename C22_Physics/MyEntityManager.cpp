@@ -188,7 +188,7 @@ void Simplex::MyEntityManager::Update(void)
 		m_mEntityArray[i]->Update();
 	}
 }
-void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String a_sUniqueID)
+MyEntity* Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String a_sUniqueID)
 {
 	//Create a temporal entity to store the object
 	MyEntity* pTemp = new MyEntity(a_sFileName, name, a_sUniqueID);
@@ -215,6 +215,8 @@ void Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String
 		//add one entity to the count
 		++m_uEntityCount;
 	}
+
+	return pTemp;
 }
 void Simplex::MyEntityManager::RemoveEntity(uint a_uIndex)
 {

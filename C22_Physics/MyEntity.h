@@ -233,6 +233,12 @@ public:
 	OUTPUT: ---
 	*/
 	void SetPosition(vector3 a_v3Position);
+
+	// sets the position without need of physics solver
+	void SetPos(vector3 pos);
+	void SetDir(vector3 dir);
+	void SetType(string _type);
+
 	/*
 	USAGE: Gets the position of the solver
 	ARGUMENTS: ---
