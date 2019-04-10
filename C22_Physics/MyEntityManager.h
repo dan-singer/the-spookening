@@ -45,7 +45,7 @@ public:
 	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
 	OUTPUT: ---
 	*/
-	void AddEntity(String a_sFileName, string name, String a_sUniqueID = "NA");
+	MyEntity* AddEntity(String a_sFileName, string name, String a_sUniqueID = "NA");
 	/*
 	USAGE: Will add an entity to the list
 	ARGUMENTS:

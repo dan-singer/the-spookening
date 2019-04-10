@@ -1,4 +1,7 @@
 #include "AppClass.h"
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
 using namespace Simplex;
 void Application::InitVariables(void)
 {
@@ -21,11 +24,33 @@ void Application::InitVariables(void)
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(100, 1, 100)));
 	m_pEntityMngr->UsePhysicsSolver(false);
 
-	m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig", "Pig");
-	m_pEntityMngr->UsePhysicsSolver(false);
-	m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
+	// seed random
+	srand(time(NULL));
 
+	// code for spawning multiple pigs
+	for (int i = 0; i < 5; i++) {
+		// create a pig
+		MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig_" + std::to_string(i));
+		temp->SetType("Pig");
 
+		// create a random position
+		vector3 v3Position = vector3(rand() % 50, 0, rand() % 50);
+		temp->SetPos(v3Position);
+
+		// create a random direction
+		vector3 v3Direction = vector3(rand() % 2, 0, rand() % 2);
+
+		// check that both values are not zero
+		if (v3Direction.x == 0 && v3Direction.z == 0)
+		{
+			// if so, set one of the values to 1
+			if (rand() % 2 > 0) { v3Direction.x = 1; }
+			else { v3Direction.z = 1; }
+		}
+
+		// set the direction
+		temp->SetDir(v3Direction);
+	}
 }
 void Application::Update(void)
 {

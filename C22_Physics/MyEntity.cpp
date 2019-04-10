@@ -2,6 +2,7 @@
 using namespace Simplex;
 #include <stdlib.h>
 #include <time.h>
+using namespace std;
 
 std::map<String, MyEntity*> MyEntity::m_IDMap;
 //  Accessors
@@ -39,6 +40,12 @@ bool Simplex::MyEntity::IsInitialized(void){ return m_bInMemory; }
 String Simplex::MyEntity::GetUniqueID(void) { return m_sUniqueID; }
 void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxis; }
 void Simplex::MyEntity::SetPosition(vector3 a_v3Position) { if(m_pSolver) m_pSolver->SetPosition(a_v3Position); }
+
+// accesser 
+void Simplex::MyEntity::SetPos(vector3 pos) { position = pos; }
+void Simplex::MyEntity::SetDir(vector3 dir) { direction = dir; }
+void Simplex::MyEntity::SetType(string _type) { type = _type; }
+
 Simplex::vector3 Simplex::MyEntity::GetPosition(void)
 {
 	if (m_pSolver != nullptr)
@@ -122,28 +129,6 @@ Simplex::MyEntity::MyEntity(String a_sFileName, string type, String a_sUniqueID)
 	}
 	m_pSolver = new MySolver();
 	this->type = type;
-
-
-
-	if (type == "Pig")
-	{
-		srand(time(NULL));
-		SetPosition(GetPosition() + vector3(0.0f, 0.0f, 0.0f));
-		// cout<< rand() % 100 << endl;
-		direction = vector3(rand() % 2, rand() % 2, 0);
-		// cout << direction.x << ", " << direction.y << endl; // change from y to z
-
-		rotAngle = rand() % 361;
-		// cout << "RotAngle: " << rotAngle << endl;
-
-		position = vector3(rand() % 20, 0, rand() % 20);
-		// cout << "Pos: " << position.x << ", " << position.y << ", " << position.z << endl;
-
-		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, glm::radians(rotAngle), AXIS_Y);
-		this->SetModelMatrix(mRot);
-
-		// for collision swap x and z and negate 
-	}
 }
 Simplex::MyEntity::MyEntity(MyEntity const& other)
 {
@@ -335,9 +320,33 @@ void Simplex::MyEntity::Update(void)
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->Update();
-		// SetPosition(GetPosition() + direction);
 		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
 	}
+	if (type == "Pig")
+	{
+		// update the position
+		position = vector3(position + (direction * 1/20.0f));
+		
+		// HAHAHAHAHAAH IT ROTATES CORRECTLY
+
+		// get the angle between the x and z and create a rotation matrix around the Y axis
+		double angle = std::atan2(direction.x, direction.z);
+		matrix4 rot = glm::rotate(angle, glm::tvec3<double>(0.0, 1.0, 0.0));
+
+		// get the angle counter angle and create a rotation matrix around the Z axis
+		double angleY = -std::asin(direction.y);
+		matrix4 rotY = glm::rotate(angleY, glm::tvec3<double>(0.0, 0.0, 1.0));
+
+		// calculate the final rotation matrix
+		matrix4 rotation = rot * rotY;
+
+		// create a new matrix with the postion, rotation, and scale
+		matrix4 newMat4 = glm::translate(position) * rotation * glm::scale(vector3(2.0f));
+
+		// set the model matrix to be the new matrix
+		SetModelMatrix(newMat4);
+	}
+	
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 {

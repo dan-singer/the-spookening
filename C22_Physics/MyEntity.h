@@ -33,13 +33,14 @@ class MyEntity
 
 	MySolver* m_pSolver = nullptr; //Physics MySolver
 
-	 string type = "";
+	string type = "";
 
-	 vector3 direction = vector3();
+	vector3 direction = vector3();
+	vector3 position = vector3();
+	
+	float rotAngle = 0.0f;
 
-	 vector3 position = vector3();
-
-	 float rotAngle = 0.0f;
+	matrix4 m_m4ViewMatrix;
 
 public:
 	/*
@@ -49,6 +50,7 @@ public:
 	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
 	Output: class object instance
 	*/
+	// MyEntity(String a_sFileName, string type, String a_sUniqueID);
 	MyEntity(String a_sFileName, string type, String a_sUniqueID = "NA");
 	/*
 	Usage: Copy Constructor
@@ -231,6 +233,12 @@ public:
 	OUTPUT: ---
 	*/
 	void SetPosition(vector3 a_v3Position);
+
+	// sets the position without need of physics solver
+	void SetPos(vector3 pos);
+	void SetDir(vector3 dir);
+	void SetType(string _type);
+
 	/*
 	USAGE: Gets the position of the solver
 	ARGUMENTS: ---
