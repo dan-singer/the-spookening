@@ -69,7 +69,7 @@ public:
 	Arguments: ---
 	Output: ---
 	*/
-	~MyEntity(void);
+	virtual ~MyEntity(void);
 	/*
 	Usage: Changes object contents for other object's
 	Arguments: other -> object to swap content from
@@ -284,6 +284,11 @@ public:
 	OUTPUT: ---
 	*/
 	void UsePhysicsSolver(bool a_bUse = true);
+
+	/*
+	USAGE: Generic update method which subclasses are free to use
+	*/
+	virtual void Update(float deltaTime);
 
 private:
 	/*

@@ -7,17 +7,17 @@ void Application::InitVariables(void)
 {
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
-	m_pEntityMngr->AddEntity("Chicken\\gallina.fbx", "Player");
-	
+	m_player = new Player("Chicken\\gallina.fbx", "", "Player");
+	m_pEntityMngr->AddEntity(m_player);
+
 	m_pEntityMngr->UsePhysicsSolver(false);
 
-	m_player = m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("Player"));
 	float playerScale = 0.01f;
 	m_player->SetModelMatrix(glm::translate(vector3(-7.5f, 100, -7.5f)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
 	m_cameraOffset = vector3(0, 6, 0);
 	
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "ground");
+	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	vector3 v3Position = vector3(-5,0,-5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);

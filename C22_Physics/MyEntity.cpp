@@ -359,3 +359,8 @@ void Simplex::MyEntity::UsePhysicsSolver(bool a_bUse)
 {
 	m_bUsePhysicsSolver = a_bUse;
 }
+
+void Simplex::MyEntity::Update(float deltaTime)
+{
+	// Intentionally empty at the base class level
+}
