@@ -106,11 +106,13 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClCompile Include="AppClassGUI.cpp" />
     <ClCompile Include="AppClassMain.cpp" />
     <ClCompile Include="ControllerConfiguration.cpp" />
+    <ClCompile Include="Egg.cpp" />
     <ClCompile Include="MyEntity.cpp" />
     <ClCompile Include="MyEntityManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyRigidBody.cpp" />
     <ClCompile Include="MySolver.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\imgui\imconfig.h" />
@@ -121,11 +123,13 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClInclude Include="AppClass.h" />
     <ClInclude Include="ControllerConfiguration.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="Egg.h" />
     <ClInclude Include="MyEntity.h" />
     <ClInclude Include="MyEntityManager.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MyRigidBody.h" />
     <ClInclude Include="MySolver.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

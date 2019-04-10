@@ -433,6 +433,10 @@ void Application::ProcessKeyboard(void)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(0, 0, 20.0f * fDelta)) * m_player->GetModelMatrix());
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		m_player->DropEgg();
+	}
 #pragma endregion
 }
 //Joystick

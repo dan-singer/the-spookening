@@ -11,6 +11,8 @@ Date: 2017/06
 #include "ControllerConfiguration.h"
 #include "imgui\ImGuiObject.h"
 
+#include "Player.h"
+
 #include "MyEntityManager.h"
 
 namespace Simplex
@@ -58,7 +60,7 @@ private:
 	sf::Sound m_sound; //sound effect
 	sf::Music m_soundBGM; //background music
 
-	MyEntity* m_player;
+	Player* m_player;
 	vector3 m_cameraOffset;
 
 public:
