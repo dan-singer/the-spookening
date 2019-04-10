@@ -21,9 +21,25 @@ void Application::InitVariables(void)
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(100, 1, 100)));
 	m_pEntityMngr->UsePhysicsSolver(false);
 
+	// We will probably need to move the random position code here as other wise it will use the same values per entity
+
+	// code for spawning multiple pigs
+	for (int i = 0; i < 5; i++) {
+		// m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(i));
+		// m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
+		// cout << "Pig " << i << endl;
+		m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig_" + std::to_string(i));
+		vector3 v3Position = vector3(glm::sphericalRand(12.0f));
+		v3Position.y = 0.0f;
+		matrix4 m4Position = glm::translate(v3Position);
+		m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(2.0f)));
+	}
+
+	/*
 	m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig", "Pig");
 	m_pEntityMngr->UsePhysicsSolver(false);
 	m_pEntityMngr->SetModelMatrix(glm::scale(vector3(5.0f)) * m_pEntityMngr->GetModelMatrix());
+	*/
 }
 void Application::Update(void)
 {

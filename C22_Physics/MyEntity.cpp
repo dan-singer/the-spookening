@@ -142,9 +142,11 @@ Simplex::MyEntity::MyEntity(String a_sFileName, string type, String a_sUniqueID)
 				direction.z = 1;
 			}
 		}
-		// rotAngle = rand() % 361;
+		// rotAngle = rand() % 361; // calculates the angle of rotation
 
-		position = vector3(rand() % 20, 0, rand() % 20);
+		position = vector3(rand() % 20, 0, rand() % 20); // calcualtes a random starting position
+
+		// calculates random directions in positive/negative directions
 		if (rand() % 2 > 0)
 		{
 			direction.x = -direction.x;
@@ -153,15 +155,49 @@ Simplex::MyEntity::MyEntity(String a_sFileName, string type, String a_sUniqueID)
 		{
 			direction.z = -direction.z;
 		}
+
 		cout << direction.x  << ", "<< direction.z << endl;
+
 		/*float dotProd = -1 * direction.z;
 		float determinate = (direction.x * direction.x) + (direction.y * direction.y) + (direction.z* direction.z);
 		float det2 = 1;*/
 		// rotAngle = acos(dotProd / sqrt(determinate * det2));
-		rotAngle = atan(direction.x / direction.z);
-		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, (rotAngle), AXIS_Y);
-		this->SetModelMatrix(mRot);
 
+		// atan does not give a result in radians, muyst be converted on its own
+
+		m_m4ViewMatrix = glm::lookAt(position, direction, AXIS_Y);
+
+		rotAngle = atan(direction.z / direction.x);
+		matrix4 mRot = glm::translate(position) * glm::rotate(IDENTITY_M4, glm::radians(rotAngle), AXIS_Y); // this was the original line
+		// matrix4 mRot = glm::translate(position) * glm::rotate(m_m4ViewMatrix, glm::radians(rotAngle), AXIS_Y);
+		this->SetModelMatrix(mRot);
+		// this->SetModelMatrix(m_m4ViewMatrix);
+
+		// for collision swap x and z and negate 
+
+		// I think that this should work if we want to use the builtin lookAt function in glm
+		/// glm::lookAt(eye, center, up)
+		/// eye:	pigs location vector
+		/// center: vector3(direction.x, 1.0f, direction.z)
+		/// up:		vector3(0.0f, 1.0f, 0.0f)
+
+		/*
+			void Simplex::MyCamera::SetPositionTargetAndUpward(vector3 a_v3Position, vector3 a_v3Target, vector3 a_v3Upward)
+			{	
+				m_v3Position = a_v3Position;
+				m_v3Target = a_v3Target;
+				m_v3Up = a_v3Upward;
+			}
+
+			void Simplex::MyCamera::CalculateViewMatrix(void)
+			{
+				m_m4View = glm::lookAt(m_v3Position, m_v3Target, m_v3Up);
+			}
+		*/
+
+
+		// maybe look at this for the rotation
+		// https://stackoverflow.com/questions/6992541/opengl-rotation-in-given-direction
 		// for collision swap x and z and negate 
 	}
 }

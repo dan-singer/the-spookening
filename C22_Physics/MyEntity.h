@@ -33,13 +33,15 @@ class MyEntity
 
 	MySolver* m_pSolver = nullptr; //Physics MySolver
 
-	 string type = "";
+	string type = "";
 
-	 vector3 direction = vector3();
+	vector3 direction = vector3();
+	vector3 position = vector3();
+	
+	float rotAngle = 0.0f;
 
-	 vector3 position = vector3();
+	matrix4 m_m4ViewMatrix;
 
-	 float rotAngle = 0.0f;
 public:
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
