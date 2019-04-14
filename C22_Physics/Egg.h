@@ -9,11 +9,13 @@ namespace Simplex
 	class Egg : public MyEntity
 	{
 	private:
-		float m_speed = 15.0f;
+		float m_speed = 30.0f;
+		bool m_isMoving = true;
 	public:
 		Egg(String a_sFileName, string type, String a_sUniqueID = "NA");
 		virtual void Update(float deltaTime) override;
 		~Egg();
+		void ResolveCollision(MyEntity* a_pOther) override;
 	};
 }
 
