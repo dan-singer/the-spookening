@@ -1,8 +1,13 @@
 #include "AppClass.h"
 #include <stdlib.h>
 #include <time.h>
+#include <ctime>
+#include <iostream>
 using namespace std;
 using namespace Simplex;
+
+
+
 void Application::InitVariables(void)
 {
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
@@ -17,12 +22,16 @@ void Application::InitVariables(void)
 	m_cameraOffset = vector3(0, 6, 0);
 	
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
+	MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
+	temp->SetType("Ground");
+
 	vector3 v3Position = vector3(-5,0,-5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(100, 1, 100)));
 	m_pEntityMngr->UsePhysicsSolver(false);
+
+	
 
 	// seed random
 	srand(time(NULL));
@@ -51,7 +60,17 @@ void Application::InitVariables(void)
 		// set the direction
 		temp->SetDir(v3Direction);
 	}
+
+	// m_pSystem->StartTimerOnClock(1.0f, 1);
+	// CountDown(); // timer start
+	// m_pSystem->GetTimeSinceStart(1);
+	// cout << "Time: " << m_pSystem->GetTimeSinceStart(1) << endl;
 }
+
+
+
+
+
 void Application::Update(void)
 {
 	//Update the system so it knows how much time has passed since the last call
@@ -60,6 +79,7 @@ void Application::Update(void)
 	//Is the ArcBall active?
 	//ArcBall();
 
+	
 
 	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 

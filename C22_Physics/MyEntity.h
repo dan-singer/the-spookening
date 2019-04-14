@@ -213,7 +213,7 @@ public:
 	ARGUMENTS: MyEntity* a_pOther -> Queried entity
 	OUTPUT: ---
 	*/
-	void ResolveCollision(MyEntity* a_pOther);
+	void ResolveCollision(MyEntity* a_pOther, MyEntity* a_pInitial);
 
 	/*
 	USAGE: Gets the solver applied to this MyEntity
@@ -238,6 +238,8 @@ public:
 	void SetPos(vector3 pos);
 	void SetDir(vector3 dir);
 	void SetType(string _type);
+
+	string GetType();
 
 	/*
 	USAGE: Gets the position of the solver
