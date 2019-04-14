@@ -184,11 +184,8 @@ void Simplex::MyEntityManager::Update(void)
 			// Pig vs Pig check
 			if (m_mEntityArray[i]->GetType() == "Pig" && m_mEntityArray[j]->GetType() == "Pig") 
 			{
-				//if objects are colliding resolve the collision
-				if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
-				{
-					m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j], m_mEntityArray[i]); // pigs are colliding
-				}
+				m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
+				m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
 			}
 
 		

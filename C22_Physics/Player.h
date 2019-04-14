@@ -12,10 +12,16 @@ namespace Simplex
 	private:
 		float m_fCooldownTimer = 0.0f;
 		float m_fStartingTimer = 1.0f;
+		int m_score = 0;
+		static Player* m_instance;
 	public:
 		Player(String a_sFileName, string type, String a_sUniqueID = "NA");
+		static Player* GetInstance();
 		virtual void Update(float deltaTime) override;
 		virtual void DropEgg();
+		// Adds points to score based on with what it is colliding
+		void AddPoints(MyEntity* other);
+		int GetScore() { return m_score; }
 		virtual ~Player();
 	};
 }

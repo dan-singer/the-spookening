@@ -2,8 +2,16 @@
 #include "MyEntityManager.h"
 using namespace Simplex;
 
+Player* Player::m_instance = nullptr;
+
 Player::Player(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a_sFileName, type, a_sUniqueID)
 {
+	m_instance = this;
+}
+
+Player* Simplex::Player::GetInstance()
+{
+	return m_instance;
 }
 
 void Simplex::Player::Update(float deltaTime)
@@ -26,6 +34,13 @@ void Simplex::Player::DropEgg()
 	}
 }
 
+
+void Simplex::Player::AddPoints(MyEntity* other)
+{
+	// TODO add points per thingy
+	// Tree is 1 point, pig is 5 points, farmer is 10 points
+	m_score++;
+}
 
 Player::~Player()
 {

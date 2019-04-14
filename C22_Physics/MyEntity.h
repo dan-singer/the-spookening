@@ -213,7 +213,7 @@ public:
 	ARGUMENTS: MyEntity* a_pOther -> Queried entity
 	OUTPUT: ---
 	*/
-	void ResolveCollision(MyEntity* a_pOther, MyEntity* a_pInitial);
+	virtual void ResolveCollision(MyEntity* a_pOther);
 
 	/*
 	USAGE: Gets the solver applied to this MyEntity
