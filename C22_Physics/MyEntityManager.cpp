@@ -185,6 +185,7 @@ void Simplex::MyEntityManager::Update(void)
 			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
 			{
 				m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
+				m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
 			}
 		}
 		//Update each entity
