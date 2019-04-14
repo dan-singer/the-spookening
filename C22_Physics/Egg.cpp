@@ -1,5 +1,5 @@
 #include "Egg.h"
-
+#include "Player.h"
 using namespace Simplex;
 
 Egg::Egg(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a_sFileName, type, a_sUniqueID)
@@ -29,6 +29,8 @@ void Simplex::Egg::ResolveCollision(MyEntity * a_pOther)
 	else if(!otherEgg){
 		//TODO squish squash enemies yay
 		a_pOther->SetModelMatrix(glm::scale(a_pOther->GetModelMatrix(), vector3(1.0f, 0.7f, 1.0f)));
+		Player::GetInstance()->AddPoints(a_pOther);
+		
 	}
 }
 

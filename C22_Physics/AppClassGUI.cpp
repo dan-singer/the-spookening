@@ -46,7 +46,14 @@ void Application::DrawGUI(void)
 			ImGui::Text("	 F3: Orthographic Y\n");
 			ImGui::Text("	 F4: Orthographic Z\n");
 			ImGui::Separator();
-			ImGui::Text("Arrows: Apply force to Steve\n");
+			ImGui::Text("Arrows: Move Chicken");
+			ImGui::Text("Space: Drop Egg");
+			ImGui::Separator();
+			if (Player::GetInstance()) {
+				ImGui::Text("Score: %d", Player::GetInstance()->GetScore());
+			}
+
+
 		}
 		ImGui::End();
 	}
