@@ -8,6 +8,7 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 	// timer = fDeltatime * FPS;
 	// save to a variable
 	// finalize the physics resolution
+	SetScale(vector3(2.0f));
 }
 
 
@@ -32,7 +33,7 @@ void Simplex::Farmer::Update(float deltaTime)
 	matrix4 rotation = rot * rotY;
 
 	// create a new matrix with the postion, rotation, and scale
-	matrix4 newMat4 = glm::translate(GetPos()) * rotation * glm::scale(vector3(2.0f));
+	matrix4 newMat4 = glm::translate(GetPos()) * rotation * glm::scale(GetScale());
 
 	// set the model matrix to be the new matrix
 	SetModelMatrix(newMat4);

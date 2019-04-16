@@ -10,6 +10,10 @@ using namespace Simplex;
 
 void Application::InitVariables(void)
 {
+	// Preload egg
+	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
+
+
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
 	m_player = new Player("Chicken\\gallina.fbx", "", "Player");
@@ -18,7 +22,7 @@ void Application::InitVariables(void)
 	m_pEntityMngr->UsePhysicsSolver(false);
 
 	float playerScale = 0.01f;
-	m_player->SetModelMatrix(glm::translate(vector3(-7.5f, 100, -7.5f)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
+	m_player->SetModelMatrix(glm::translate(vector3(MAP_SIZE/2, 80, MAP_SIZE/2)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
 	m_cameraOffset = vector3(0, 6, 0);
 	
 
@@ -30,7 +34,7 @@ void Application::InitVariables(void)
 	vector3 v3Position = vector3(-5,0,-5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);
-	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(100, 1, 100)));
+	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(MAP_SIZE, 1, MAP_SIZE)));
 	m_pEntityMngr->UsePhysicsSolver(false);
 
 	
@@ -39,13 +43,13 @@ void Application::InitVariables(void)
 	srand(time(NULL));
 
 	// code for spawning multiple pigs
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < ENEMY_COUNT; i++) {
 		// create a pig
 		Farmer* temp = new Farmer("Minecraft\\Pig.obj", "", "Pig_" + std::to_string(i));
 		temp->SetType("Pig");
 
 		// create a random position
-		vector3 v3Position = vector3(rand() % 50, 0, rand() % 50);
+		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 0, rand() % (int)MAP_SIZE);
 		temp->SetPos(v3Position);
 
 		// create a random direction

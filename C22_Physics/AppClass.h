@@ -64,6 +64,9 @@ private:
 	Player* m_player;
 	vector3 m_cameraOffset;
 
+	const float MAP_SIZE = 200;
+	const int ENEMY_COUNT = 20;
+
 public:
 #pragma region Constructor / Run / Destructor
 	/*
