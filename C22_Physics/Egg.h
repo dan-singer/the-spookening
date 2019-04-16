@@ -11,6 +11,9 @@ namespace Simplex
 	private:
 		float m_speed = 30.0f;
 		bool m_isMoving = true;
+		bool m_isBeingDestroyed = false;
+		float m_destroyTimer = 0.75f;
+		float m_destroyCounter = 0;
 	public:
 		Egg(String a_sFileName, string type, String a_sUniqueID = "NA");
 		virtual void Update(float deltaTime) override;

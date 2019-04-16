@@ -37,6 +37,7 @@ class MyEntity
 
 	vector3 direction = vector3();
 	vector3 position = vector3();
+	vector3 scale = vector3();
 	
 	float rotAngle = 0.0f;
 
@@ -238,12 +239,15 @@ public:
 	void SetPos(vector3 pos);
 	void SetDir(vector3 dir);
 	void SetType(string _type);
+	void SetScale(vector3 scale);
 
 	string GetType();
 
 	vector3 GetPos();
 
 	vector3 GetDir();
+
+	vector3 GetScale();
 
 	/*
 	USAGE: Gets the position of the solver
