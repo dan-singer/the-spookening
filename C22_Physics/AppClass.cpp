@@ -42,8 +42,6 @@ void Application::InitVariables(void)
 	for (int i = 0; i < 5; i++) {
 		// create a pig
 		Farmer* temp = new Farmer("Minecraft\\Pig.obj", "", "Pig_" + std::to_string(i));
-
-		// MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig_" + std::to_string(i));
 		temp->SetType("Pig");
 
 		// create a random position
@@ -60,6 +58,8 @@ void Application::InitVariables(void)
 			if (rand() % 2 > 0) { v3Direction.x = 1; }
 			else { v3Direction.z = 1; }
 		}
+
+		cout << "X: " << v3Position.x << " Z: " << v3Position.z << endl;
 
 		// set the direction
 		temp->SetDir(v3Direction);

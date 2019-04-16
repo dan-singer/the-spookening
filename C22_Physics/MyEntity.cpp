@@ -331,27 +331,10 @@ void Simplex::MyEntity::Update(void)
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 {
-	if (this->GetType() == "Pig" && a_pOther->GetType() == "Pig") {
-		cout << "Pig hit Pig" << endl; // limit this by timer for start
-
-		double angle = std::atan2(a_pOther->direction.x, a_pOther->direction.z);
-		matrix4 rot = glm::rotate((angle / 2), glm::tvec3<double>(0.0, 1.0, 0.0));
-
-		// get the angle counter angle and create a rotation matrix around the Z axis
-		double angleY = -std::asin(a_pOther->direction.y);
-		matrix4 rotY = glm::rotate((angleY / 2), glm::tvec3<double>(0.0, 0.0, 1.0));
-
-		// calculate the final rotation matrix
-		matrix4 rotation = rot * rotY;
-
-		// create a new matrix with the postion, rotation, and scale
-		matrix4 newMat4 = glm::translate(this->position) * rotation * glm::scale(vector3(2.0f));
-
-		// set the model matrix to be the new matrix
-		// SetModelMatrix(newMat4);
-		this->SetModelMatrix(newMat4); // collision resolution between pigs
+	if (m_bUsePhysicsSolver)
+	{
+		m_pSolver->ResolveCollision(a_pOther->GetSolver());
 	}
-	
 }
 
 void Simplex::MyEntity::UsePhysicsSolver(bool a_bUse)

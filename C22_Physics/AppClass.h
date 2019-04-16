@@ -24,7 +24,7 @@ class Application
 	MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 private:
 	//TODO update
-	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
+	String m_sProgrammer = "The Spooky Chickens - The Spookening"; //programmer
 
 	static ImGuiObject gui; //GUI object
 	bool m_bGUI_Main = true; //show Main GUI window?

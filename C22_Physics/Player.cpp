@@ -17,6 +17,7 @@ Player* Simplex::Player::GetInstance()
 void Simplex::Player::Update(float deltaTime)
 {
 	m_fCooldownTimer -= deltaTime;
+	m_fgameTimer -= deltaTime; // game timer
 }
 
 void Simplex::Player::DropEgg()
