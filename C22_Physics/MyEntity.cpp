@@ -45,6 +45,10 @@ void Simplex::MyEntity::SetPosition(vector3 a_v3Position) { if(m_pSolver) m_pSol
 void Simplex::MyEntity::SetPos(vector3 pos) { position = pos; }
 void Simplex::MyEntity::SetDir(vector3 dir) { direction = dir; }
 void Simplex::MyEntity::SetType(string _type) { type = _type; }
+string Simplex::MyEntity::GetType() { return type; }
+vector3 Simplex::MyEntity::GetPos() { return position; }
+vector3 Simplex::MyEntity::GetDir() { return direction; }
+
 
 Simplex::vector3 Simplex::MyEntity::GetPosition(void)
 {
@@ -322,30 +326,7 @@ void Simplex::MyEntity::Update(void)
 		m_pSolver->Update();
 		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
 	}
-	if (type == "Pig")
-	{
-		// update the position
-		position = vector3(position + (direction * 1/20.0f));
-		
-		// HAHAHAHAHAAH IT ROTATES CORRECTLY
-
-		// get the angle between the x and z and create a rotation matrix around the Y axis
-		double angle = std::atan2(direction.x, direction.z);
-		matrix4 rot = glm::rotate(angle, glm::tvec3<double>(0.0, 1.0, 0.0));
-
-		// get the angle counter angle and create a rotation matrix around the Z axis
-		double angleY = -std::asin(direction.y);
-		matrix4 rotY = glm::rotate(angleY, glm::tvec3<double>(0.0, 0.0, 1.0));
-
-		// calculate the final rotation matrix
-		matrix4 rotation = rot * rotY;
-
-		// create a new matrix with the postion, rotation, and scale
-		matrix4 newMat4 = glm::translate(position) * rotation * glm::scale(vector3(2.0f));
-
-		// set the model matrix to be the new matrix
-		SetModelMatrix(newMat4);
-	}
+	
 	
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
@@ -355,6 +336,7 @@ void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 		m_pSolver->ResolveCollision(a_pOther->GetSolver());
 	}
 }
+
 void Simplex::MyEntity::UsePhysicsSolver(bool a_bUse)
 {
 	m_bUsePhysicsSolver = a_bUse;
