@@ -1,6 +1,7 @@
 #include "Egg.h"
 #include "Player.h"
 #include "MyEntityManager.h"
+#include "Farmer.h"
 using namespace Simplex;
 
 Egg::Egg(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a_sFileName, type, a_sUniqueID)
@@ -30,18 +31,22 @@ Egg::~Egg()
 
 void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 {
-	Egg* otherEgg = dynamic_cast<Egg*>(a_pOther);
 
+	Farmer* farmer = dynamic_cast<Farmer*>(a_pOther);
 	if (a_pOther->GetUniqueID() == "ground") {
 		m_isMoving = false;
 		m_isBeingDestroyed = true;
 	}
-	else if(!otherEgg){
-		MyEntityManager::GetInstance()->RemoveEntity(a_pOther->GetUniqueID());
-		MyEntity* bacon = new MyEntity("Bacon\\Bacon Slice.obj", "test");
-		MyEntityManager::GetInstance()->AddEntity(bacon);
-		bacon->SetModelMatrix(glm::translate(GetPosition()) * glm::scale(bacon->GetModelMatrix(), vector3(0.001f)));
+	else if(farmer){
 
+		if (a_pOther->GetType() == "Pig")
+		{
+			MyEntity* bacon = new MyEntity("Breakfast\\model.obj", "");
+			MyEntityManager::GetInstance()->AddEntity(bacon);
+			bacon->SetModelMatrix(glm::translate(GetPosition() + vector3(0, 0, 0)) * glm::scale(bacon->GetModelMatrix(), vector3(5.0f)));
+		}
+
+		MyEntityManager::GetInstance()->RemoveEntity(a_pOther->GetUniqueID());
 		Player::GetInstance()->AddPoints(a_pOther);
 	}
 }

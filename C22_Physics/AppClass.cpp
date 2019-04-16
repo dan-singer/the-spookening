@@ -12,7 +12,7 @@ void Application::InitVariables(void)
 {
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
-	MyEntity entity("Bacon\\Bacon Slice.obj", "");
+	MyEntity entity("Breakfast\\model.obj", "");
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
