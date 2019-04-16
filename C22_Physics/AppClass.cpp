@@ -13,7 +13,6 @@ void Application::InitVariables(void)
 	// Preload egg
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 
-
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
 	m_player = new Player("Chicken\\gallina.fbx", "", "Player");
@@ -44,9 +43,18 @@ void Application::InitVariables(void)
 
 	// code for spawning multiple pigs
 	for (int i = 0; i < ENEMY_COUNT; i++) {
-		// create a pig
-		Farmer* temp = new Farmer("Minecraft\\Pig.obj", "", "Pig_" + std::to_string(i));
-		temp->SetType("Pig");
+		// create an enemy
+		SpawnType spawnType = static_cast<SpawnType>(rand() % (int)SpawnType::NUM_TYPES);
+
+		MyEntity* temp = nullptr;
+		if (spawnType == SpawnType::Farmer)
+		{
+			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(i));
+		}
+		else if (spawnType == SpawnType::Pig) 
+		{
+			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(i));
+		}
 
 		// create a random position
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 0, rand() % (int)MAP_SIZE);

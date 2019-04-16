@@ -18,6 +18,13 @@ Date: 2017/06
 
 namespace Simplex
 {
+
+enum class SpawnType {
+	Farmer,
+	Pig,
+	NUM_TYPES
+};
+
 //Adding Application to the Simplex namespace
 class Application
 {
@@ -66,6 +73,8 @@ private:
 
 	const float MAP_SIZE = 200;
 	const int ENEMY_COUNT = 20;
+	
+	
 
 public:
 #pragma region Constructor / Run / Destructor

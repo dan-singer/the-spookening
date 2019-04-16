@@ -41,8 +41,12 @@ void Simplex::Player::AddPoints(MyEntity* other)
 {
 	// TODO add points per thingy
 	// Tree is 1 point, pig is 5 points, farmer is 10 points
-	if (dynamic_cast<Farmer*>(other)) {
-		m_score += 5;
+	Farmer* farmer = dynamic_cast<Farmer*>(other);
+	if (farmer) {
+		if (farmer->GetType() == "Pig")
+			m_score += 5;
+		else if (farmer->GetType() == "Farmer")
+			m_score += 10;
 	}
 }
 
