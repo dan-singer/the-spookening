@@ -38,6 +38,10 @@ void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 	}
 	else if(!otherEgg){
 		MyEntityManager::GetInstance()->RemoveEntity(a_pOther->GetUniqueID());
+		MyEntity* bacon = new MyEntity("Bacon\\Bacon Slice.obj", "test");
+		MyEntityManager::GetInstance()->AddEntity(bacon);
+		bacon->SetModelMatrix(glm::translate(GetPosition()) * glm::scale(bacon->GetModelMatrix(), vector3(0.001f)));
+
 		Player::GetInstance()->AddPoints(a_pOther);
 	}
 }
