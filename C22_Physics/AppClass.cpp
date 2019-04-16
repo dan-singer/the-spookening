@@ -22,6 +22,8 @@ void Application::InitVariables(void)
 	m_cameraOffset = vector3(0, 6, 0);
 	
 
+	
+
 	MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	temp->SetType("Ground");
 
@@ -39,7 +41,9 @@ void Application::InitVariables(void)
 	// code for spawning multiple pigs
 	for (int i = 0; i < 5; i++) {
 		// create a pig
-		MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig_" + std::to_string(i));
+		Farmer* temp = new Farmer("Minecraft\\Pig.obj", "", "Pig_" + std::to_string(i));
+
+		// MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig_" + std::to_string(i));
 		temp->SetType("Pig");
 
 		// create a random position
@@ -59,6 +63,7 @@ void Application::InitVariables(void)
 
 		// set the direction
 		temp->SetDir(v3Direction);
+		m_pEntityMngr->AddEntity(temp);
 	}
 
 	// m_pSystem->StartTimerOnClock(1.0f, 1);

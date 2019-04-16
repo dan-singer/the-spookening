@@ -241,6 +241,10 @@ public:
 
 	string GetType();
 
+	vector3 GetPos();
+
+	vector3 GetDir();
+
 	/*
 	USAGE: Gets the position of the solver
 	ARGUMENTS: ---

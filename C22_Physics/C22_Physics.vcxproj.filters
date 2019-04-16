@@ -63,6 +63,9 @@
     <ClCompile Include="Egg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Farmer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Egg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Farmer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,6 +46,9 @@ void Simplex::MyEntity::SetPos(vector3 pos) { position = pos; }
 void Simplex::MyEntity::SetDir(vector3 dir) { direction = dir; }
 void Simplex::MyEntity::SetType(string _type) { type = _type; }
 string Simplex::MyEntity::GetType() { return type; }
+vector3 Simplex::MyEntity::GetPos() { return position; }
+vector3 Simplex::MyEntity::GetDir() { return direction; }
+
 
 Simplex::vector3 Simplex::MyEntity::GetPosition(void)
 {
@@ -323,35 +326,12 @@ void Simplex::MyEntity::Update(void)
 		m_pSolver->Update();
 		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) * glm::scale(m_pSolver->GetSize()));
 	}
-	if (type == "Pig")
-	{
-		// update the position
-		position = vector3(position + (direction * 1/20.0f));
-		
-		// HAHAHAHAHAAH IT ROTATES CORRECTLY
-
-		// get the angle between the x and z and create a rotation matrix around the Y axis
-		double angle = std::atan2(direction.x, direction.z);
-		matrix4 rot = glm::rotate(angle, glm::tvec3<double>(0.0, 1.0, 0.0));
-
-		// get the angle counter angle and create a rotation matrix around the Z axis
-		double angleY = -std::asin(direction.y);
-		matrix4 rotY = glm::rotate(angleY, glm::tvec3<double>(0.0, 0.0, 1.0));
-
-		// calculate the final rotation matrix
-		matrix4 rotation = rot * rotY;
-
-		// create a new matrix with the postion, rotation, and scale
-		matrix4 newMat4 = glm::translate(position) * rotation * glm::scale(vector3(2.0f));
-
-		// set the model matrix to be the new matrix
-		SetModelMatrix(newMat4);
-	}
+	
 	
 }
-void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther, MyEntity* a_pInitial)
+void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 {
-	if (a_pInitial->GetType() == "Pig" && a_pOther->GetType() == "Pig") {
+	if (this->GetType() == "Pig" && a_pOther->GetType() == "Pig") {
 		cout << "Pig hit Pig" << endl; // limit this by timer for start
 
 		double angle = std::atan2(a_pOther->direction.x, a_pOther->direction.z);
@@ -365,11 +345,11 @@ void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther, MyEntity* a_pInitia
 		matrix4 rotation = rot * rotY;
 
 		// create a new matrix with the postion, rotation, and scale
-		matrix4 newMat4 = glm::translate(a_pInitial->position) * rotation * glm::scale(vector3(2.0f));
+		matrix4 newMat4 = glm::translate(this->position) * rotation * glm::scale(vector3(2.0f));
 
 		// set the model matrix to be the new matrix
 		// SetModelMatrix(newMat4);
-		a_pInitial->SetModelMatrix(newMat4); // collision resolution between pigs
+		this->SetModelMatrix(newMat4); // collision resolution between pigs
 	}
 	
 }

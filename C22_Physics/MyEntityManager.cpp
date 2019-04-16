@@ -172,8 +172,14 @@ void Simplex::MyEntityManager::Update(void)
 	float fDelta = SystemSingleton::GetInstance()->GetDeltaTime(m_clock);
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
+
 		m_mEntityArray[i]->ClearCollisionList();
+		
+		// m_mEntityArray[i]->Update();
+		
+		
 		m_mEntityArray[i]->Update(fDelta);
+		
 	}
 	
 	//check collisions
@@ -181,16 +187,11 @@ void Simplex::MyEntityManager::Update(void)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)
 		{
-			// Pig vs Pig check
-			if (m_mEntityArray[i]->GetType() == "Pig" && m_mEntityArray[j]->GetType() == "Pig") 
-			{
+			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) {
 				m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
 				m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
 			}
-
-		
 		}
-		//Update each entity
 		m_mEntityArray[i]->Update();
 	}
 }

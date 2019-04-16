@@ -12,6 +12,7 @@ Date: 2017/06
 #include "imgui\ImGuiObject.h"
 
 #include "Player.h"
+#include "Farmer.h"
 
 #include "MyEntityManager.h"
 
