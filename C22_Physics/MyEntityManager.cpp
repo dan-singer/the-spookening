@@ -172,22 +172,25 @@ void Simplex::MyEntityManager::Update(void)
 	float fDelta = SystemSingleton::GetInstance()->GetDeltaTime(m_clock);
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
-
 		m_mEntityArray[i]->ClearCollisionList();
-		
-		// m_mEntityArray[i]->Update();
-		
-		
 		m_mEntityArray[i]->Update(fDelta);
-		
 	}
+
+	//check collisions
+	//for (uint i = 0; i < m_uEntityCount; i++)
+	//{
+	//	for (uint j = i + 1; j < m_uEntityCount; j++)
+	//	{
+	//		if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) {
+	//			m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
+	//			m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
+	//		}
+	//	}
+	//	m_mEntityArray[i]->Update();
+	//}
 	
 	//check collisions
-	for (uint i = 0; i < m_uEntityCount; i++)
-	{
-		m_mEntityArray[i]->Update();
-	}
-	UpdateOctree(6);
+	UpdateOctree(4); // Rebuild the octree each frame because many objects will be moving
 	m_octree->CheckCollisions();
 	// std::cout << m_octree->GetOctantCount() << std::endl;
 }

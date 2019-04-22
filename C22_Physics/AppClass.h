@@ -72,9 +72,9 @@ private:
 	vector3 m_cameraOffset;
 
 	const float MAP_SIZE = 500;
-	const int ENEMY_COUNT = 100;
+	const int ENEMY_COUNT = 500;
 	
-	
+	bool m_displayOctree = false;
 
 public:
 #pragma region Constructor / Run / Destructor
