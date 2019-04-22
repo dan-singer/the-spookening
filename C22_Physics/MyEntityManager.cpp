@@ -185,15 +185,11 @@ void Simplex::MyEntityManager::Update(void)
 	//check collisions
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
-		for (uint j = i + 1; j < m_uEntityCount; j++)
-		{
-			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) {
-				m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
-				m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
-			}
-		}
 		m_mEntityArray[i]->Update();
 	}
+	UpdateOctree(6);
+	m_octree->CheckCollisions();
+	// std::cout << m_octree->GetOctantCount() << std::endl;
 }
 MyEntity* Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String a_sUniqueID)
 {
@@ -530,4 +526,47 @@ void Simplex::MyEntityManager::UsePhysicsSolver(bool a_bUse, uint a_uIndex)
 		a_uIndex = m_uEntityCount - 1;
 
 	return m_mEntityArray[a_uIndex]->UsePhysicsSolver(a_bUse);
+}
+
+void Simplex::MyEntityManager::UpdateOctree(int levels)
+{
+	// Rebuild the octree
+	SafeDelete(m_octree);
+	std::vector<uint> ids;
+	for (int i = 0; i < m_uEntityCount; ++i)
+	{
+		ids.push_back(i);
+	}
+	vector3 min = m_mEntityArray[0]->GetRigidBody()->GetCenterGlobal();
+	vector3 max = min;
+	for (int i = 1; i < m_uEntityCount; ++i) {
+		vector3 pos = m_mEntityArray[i]->GetRigidBody()->GetCenterGlobal();
+		if (pos.x < min.x)
+			min.x = pos.x;
+		if (pos.x > max.x)
+			max.x = pos.x;
+		if (pos.y < min.y)
+			min.y = pos.y;
+		if (pos.y > max.y)
+			max.y = pos.y;
+		if (pos.z < min.z)
+			min.z = pos.z;
+		if (pos.z > max.z)
+			max.z = pos.z;
+	}
+	m_octree = new Octree(BoundingBox(vector3(-1000,-1000,-1000), vector3(1000,1000,1000)), ids);
+	m_octree->BuildTree(1, levels);
+}
+
+void Simplex::MyEntityManager::DisplayOctree(uint id)
+{
+	if (id == -1)
+		m_octree->Display();
+	else
+		m_octree->Display(id);
+}
+
+uint Simplex::MyEntityManager::GetOctantCount()
+{
+	return m_octree->GetOctantCount();
 }

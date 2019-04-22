@@ -14,7 +14,7 @@
     <ProjectGuid>{58CB6636-1057-466F-AB91-BADB3395421A}</ProjectGuid>
     <RootNamespace>C22_Physics</RootNamespace>
     <ProjectName>TheSpookening</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -113,6 +113,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyRigidBody.cpp" />
     <ClCompile Include="MySolver.cpp" />
+    <ClCompile Include="Octree.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +132,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClInclude Include="Main.h" />
     <ClInclude Include="MyRigidBody.h" />
     <ClInclude Include="MySolver.h" />
+    <ClInclude Include="Octree.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>

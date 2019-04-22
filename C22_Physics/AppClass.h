@@ -71,8 +71,8 @@ private:
 	Player* m_player;
 	vector3 m_cameraOffset;
 
-	const float MAP_SIZE = 200;
-	const int ENEMY_COUNT = 20;
+	const float MAP_SIZE = 500;
+	const int ENEMY_COUNT = 100;
 	
 	
 

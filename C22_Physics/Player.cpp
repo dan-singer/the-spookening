@@ -31,6 +31,7 @@ void Simplex::Player::DropEgg()
 		manager->AddEntity(toDrop);
 		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(-1, -10, 0)));
 		manager->UsePhysicsSolver(false);
+		manager->UpdateOctree(6);
 
 		m_fCooldownTimer = m_fStartingTimer;
 	}

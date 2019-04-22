@@ -79,6 +79,9 @@ void Application::InitVariables(void)
 		m_pEntityMngr->AddEntity(temp);
 	}
 
+	m_pEntityMngr->UpdateOctree(6);
+
+
 	// m_pSystem->StartTimerOnClock(1.0f, 1);
 	// CountDown(); // timer start
 	// m_pSystem->GetTimeSinceStart(1);
@@ -131,6 +134,10 @@ void Application::Display(void)
 
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
+
+	m_pEntityMngr->DisplayOctree(-1);
+
+	m_pMeshMngr->Render();
 
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();
