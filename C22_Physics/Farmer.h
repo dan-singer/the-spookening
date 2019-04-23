@@ -10,11 +10,14 @@ namespace Simplex
 	{
 	private:
 		float m_fStartingTimer = 60.0f;
+		matrix4 matrixRot4;
+		bool wasColliding = false;
 	public:
 		Farmer(String a_sFileName, string type, String a_sUniqueID = "NA");
 		virtual void Update(float deltaTime);
 		virtual ~Farmer();
 		void ResolveCollision(MyEntity* a_pOther);
+		void calcRot();
 	};
 }
 
