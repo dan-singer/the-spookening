@@ -21,7 +21,7 @@ void Application::InitVariables(void)
 
 	m_pEntityMngr->UsePhysicsSolver(false);
 
-	// m_pCameraMngr->SetFOV(101);
+	
 	// m_pCameraMngr->GetCamera(0).set
 
 	float playerScale = 0.01f;
@@ -40,7 +40,9 @@ void Application::InitVariables(void)
 	m_pEntityMngr->UsePhysicsSolver(false);
 
 
-	m_pMeshMngr->GenerateCube(MAP_SIZE * 2, C_BLACK);
+
+
+	
 
 	// m_pEntityMngr->AddEntity(m_pMeshMngr->GenerateCube(MAP_SIZE * 2, C_BLACK), "", "BlackBox");
 
@@ -55,6 +57,12 @@ void Application::InitVariables(void)
 	v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2 - 20);
 	m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)); // this is the rotation needed for the title screen
+
+
+	temp = m_pEntityMngr->AddEntity("GameScreens\\black.obj", "", "BlackBox");
+	v3Position = vector3(MAP_SIZE/2, 201, MAP_SIZE/2);
+	m4Position = glm::translate(v3Position);
+	m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(10)));
 
 	// left wall of "fences"
 	for (int i = 0; i < 20; i++) {
@@ -160,7 +168,7 @@ void Application::Update(void)
 
 	// set endgame state
 	if (m_player->GetGameTime() <= 0.0) {
-		
+		m_pCameraMngr->SetFOV(101);
 		vector3 v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2);
 		matrix4 m4Position = glm::translate(v3Position);
 		
@@ -187,6 +195,8 @@ void Application::Display(void)
 
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
+
+	// m_pMeshMngr->AddCubeToRenderList(matrix4(glm::scale(vector3(MAP_SIZE * 2, 80.0f, MAP_SIZE * 2))), C_BLACK);
 
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();
