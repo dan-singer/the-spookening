@@ -31,7 +31,7 @@ void Simplex::Farmer::Update(float deltaTime)
 	// m_fCooldownTimer -= deltaTime;
 	// update the position
 	// position = vector3(position + (direction * 1 / 20.0f));
-	SetPos(vector3(GetPos() + (GetDir() * 1 / 20.0f)));
+	SetPos(vector3(GetPos() + (GetDir() * deltaTime)));
 
 	// create a new matrix with the postion, rotation, and scale
 	matrix4 newMat4 = glm::translate(GetPos()) * matrixRot4 * glm::scale(GetScale());
