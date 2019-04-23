@@ -56,6 +56,7 @@ private:
 	vector4 m_v4ClearColor; //Color of the scene
 	bool m_bRunning = false; //Is App running?
 	bool m_bModifier = false; //is shift pressed?
+	bool m_bStartGame = false; // has game started?
 
 	sf::Window* m_pWindow = nullptr; //SFML window
 	SystemSingleton* m_pSystem = nullptr; //Singleton of the system

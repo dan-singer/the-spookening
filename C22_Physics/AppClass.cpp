@@ -136,54 +136,53 @@ void Application::InitVariables(void)
 	// cout << "Time: " << m_pSystem->GetTimeSinceStart(1) << endl;
 }
 
-
-
-
-
 void Application::Update(void)
 {
-	//Update the system so it knows how much time has passed since the last call
-	m_pSystem->Update();
+	// do an if statement here for start screen
+	if (m_bStartGame) {
+		//Update the system so it knows how much time has passed since the last call
+		m_pSystem->Update();
 
-	//Is the ArcBall active?
-	//ArcBall();
+		//Is the ArcBall active?
+		//ArcBall();
 
-	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
+		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
-	//Set the position and target of the camera
-	m_pCameraMngr->SetPositionTargetAndUpward(
-		camPosition,				// Position
-		m_player->GetPosition(),	// Target
-		-AXIS_Z);					// Up
-
-	//Update Entity Manager
-	m_pEntityMngr->Update();
-
-	//Set the model matrix for the main object
-	//m_pEntityMngr->SetModelMatrix(m_m4Steve, "Steve");
-
-	//Add objects to render list
-	m_pEntityMngr->AddEntityToRenderList(-1, true);
-	//m_pEntityMngr->AddEntityToRenderList(-1, true);
-
-	// set endgame state
-	if (m_player->GetGameTime() <= 0.0) {
-		m_pCameraMngr->SetFOV(101);
-		vector3 v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2);
-		matrix4 m4Position = glm::translate(v3Position);
-		
-		m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("EndScreen"))->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_X) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y)); // This is for the end state screen
-
-		camPosition = vector3(MAP_SIZE / 2, 80, MAP_SIZE / 2) + m_cameraOffset;
-
+		//Set the position and target of the camera
 		m_pCameraMngr->SetPositionTargetAndUpward(
-			camPosition,			// Position
-			vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2),
-			AXIS_Z);
-		m_player->SetGameTime(0.0);
+			camPosition,				// Position
+			m_player->GetPosition(),	// Target
+			-AXIS_Z);					// Up
+
+		//Update Entity Manager
+		m_pEntityMngr->Update();
+
+		//Add objects to render list
+		m_pEntityMngr->AddEntityToRenderList(-1, true);
+		//m_pEntityMngr->AddEntityToRenderList(-1, true);
+
+		// set endgame state
+		if (m_player->GetGameTime() <= 0.0) {
+			m_pCameraMngr->SetFOV(101);
+			vector3 v3Position = vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2);
+			matrix4 m4Position = glm::translate(v3Position);
+
+			m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("EndScreen"))->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_X) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y)); // This is for the end state screen
+
+			camPosition = vector3(MAP_SIZE / 2, 80, MAP_SIZE / 2) + m_cameraOffset;
+
+			m_pCameraMngr->SetPositionTargetAndUpward(
+				camPosition,			// Position
+				vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2),
+				AXIS_Z);
+			m_player->SetGameTime(0.0);
+		}
 	}
-
-
+	else {
+		m_player->SetGameTime(m_player->GetGameTimeStart()); // this does no
+		// m_pEntityMngr
+	}
+	
 }
 void Application::Display(void)
 {
