@@ -26,6 +26,8 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 
 void Simplex::Farmer::Update(float deltaTime)
 {
+	SetDir(matrixRot4[2]);
+
 	// m_fCooldownTimer -= deltaTime;
 	// update the position
 	// position = vector3(position + (direction * 1 / 20.0f));
@@ -48,19 +50,14 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther)
 
 	if (a_pOther->GetUniqueID() != "ground" && temp->GetGameTime() < temp->GetGameTimeStart() - 0.0000000000000000001f)
 	{
-		float angle = PI/4.0f;
-		matrix4 rotation = glm::rotate(angle, AXIS_Y);
-		SetModelMatrix(rotation * GetModelMatrix());
-		vector3 dir = GetDir();
-		vector3 newDir = rotation * vector4(dir.x, dir.y, dir.z, 0);
-		SetDir(newDir);
+		double angle = std::atan2(a_pOther->GetDir().x, a_pOther->GetDir().z);
+		matrix4 rot = glm::rotate((angle / 2), glm::tvec3<double>(0.0f, 1.0f, 0.0f));
 
-		glm::quat rot;
-		glm::decompose(GetModelMatrix(), vector3(), rot, vector3(), vector3(), vector4());
-		matrixRot4 = ToMatrix4(rot);
+		double angleY = -std::asin(a_pOther->GetDir().y);
+		matrix4 rotY = glm::rotate((angleY / 2), glm::tvec3<double>(0.0f, 0.0f, 1.0f));
 
-		SetPos(GetPos() + GetDir());
-
+		matrix4 rotation = rot * rotY;
+		matrixRot4 = rotation; 
 	}
 }
 
