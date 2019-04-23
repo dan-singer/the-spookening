@@ -9,19 +9,8 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 	// save to a variable
 	// finalize the physics resolution
 	SetScale(vector3(2.0f));
-}
 
-
-void Simplex::Farmer::Update(float deltaTime)
-{
-	// m_fCooldownTimer -= deltaTime;
-	// update the position
-	// position = vector3(position + (direction * 1 / 20.0f));
-	SetPos(vector3(GetPos() + (GetDir() * 1 / 20.0f)));
-
-	// HAHAHAHAHAAH IT ROTATES CORRECTLY
-
-	// get the angle between the x and z and create a rotation matrix around the Y axis
+	//
 	double angle = std::atan2(GetDir().x, GetDir().z);
 	matrix4 rot = glm::rotate(angle, glm::tvec3<double>(0.0, 1.0, 0.0));
 
@@ -31,9 +20,21 @@ void Simplex::Farmer::Update(float deltaTime)
 
 	// calculate the final rotation matrix
 	matrix4 rotation = rot * rotY;
+	matrixRot4 = rotation;
+}
+
+
+void Simplex::Farmer::Update(float deltaTime)
+{
+	SetDir(matrixRot4[2]);
+
+	// m_fCooldownTimer -= deltaTime;
+	// update the position
+	// position = vector3(position + (direction * 1 / 20.0f));
+	SetPos(vector3(GetPos() + (GetDir() * deltaTime * 5)));
 
 	// create a new matrix with the postion, rotation, and scale
-	matrix4 newMat4 = glm::translate(GetPos()) * rotation * glm::scale(GetScale());
+	matrix4 newMat4 = glm::translate(GetPos()) * matrixRot4 * glm::scale(GetScale());
 
 	// set the model matrix to be the new matrix
 	SetModelMatrix(newMat4);
@@ -84,7 +85,7 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther)
 
 		// calculate the final rotation matrix
 		matrix4 rotation = rot * rotY;
-
+		matrixRot4 = rotation;
 		// create a new matrix with the postion, rotation, and scale
 		matrix4 newMat4 = glm::translate(this->GetPos()) * rotation * glm::scale(vector3(2.0f));
 
@@ -96,5 +97,18 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther)
 
 		this->SetModelMatrix(newMat4); // collision resolution between pigs
 	}
+}
 
+void Simplex::Farmer::calcRot()
+{
+	double angle = std::atan2(GetDir().x, GetDir().z);
+	matrix4 rot = glm::rotate(angle, glm::tvec3<double>(0.0, 1.0, 0.0));
+
+	// get the angle counter angle and create a rotation matrix around the Z axis
+	double angleY = -std::asin(GetDir().y);
+	matrix4 rotY = glm::rotate(angleY, glm::tvec3<double>(0.0, 0.0, 1.0));
+
+	// calculate the final rotation matrix
+	matrix4 rotation = rot * rotY;
+	matrixRot4 = rotation;
 }

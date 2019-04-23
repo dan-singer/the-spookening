@@ -111,6 +111,7 @@ void Application::InitVariables(void)
 		// create a random position
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 0, rand() % (int)MAP_SIZE);
 		temp->SetPos(v3Position);
+		
 
 		// create a random direction
 		vector3 v3Direction = vector3(rand() % 2, 0, rand() % 2);
@@ -127,8 +128,18 @@ void Application::InitVariables(void)
 
 		// set the direction
 		temp->SetDir(v3Direction);
+
+		Farmer* farmer = dynamic_cast<Farmer*>(temp);
+		if (farmer)
+		{
+			farmer->calcRot();
+		}
+
 		m_pEntityMngr->AddEntity(temp);
 	}
+
+	m_pRoot = new MyOctant(2,5);
+	m_pEntityMngr->Update();
 
 	// m_pSystem->StartTimerOnClock(1.0f, 1);
 	// CountDown(); // timer start
@@ -146,7 +157,14 @@ void Application::Update(void)
 		//Is the ArcBall active?
 		//ArcBall();
 
-		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
+	if (m_pRoot) {
+		delete m_pRoot;
+		m_pRoot = new MyOctant(2,5);
+	}
+
+	
+
+	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
 		//Set the position and target of the camera
 		m_pCameraMngr->SetPositionTargetAndUpward(
@@ -195,7 +213,10 @@ void Application::Display(void)
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
 
-	// m_pMeshMngr->AddCubeToRenderList(matrix4(glm::scale(vector3(MAP_SIZE * 2, 80.0f, MAP_SIZE * 2))), C_BLACK);
+	if (m_displayOctree)
+		m_pRoot->Display();
+
+	m_pMeshMngr->Render();
 
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();
