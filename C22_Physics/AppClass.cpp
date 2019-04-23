@@ -138,7 +138,7 @@ void Application::InitVariables(void)
 		m_pEntityMngr->AddEntity(temp);
 	}
 
-	m_pRoot = new MyOctant(2,5);
+	m_pRoot = new MyOctant(3,5);
 	m_pEntityMngr->Update();
 
 	// m_pSystem->StartTimerOnClock(1.0f, 1);
@@ -159,7 +159,7 @@ void Application::Update(void)
 
 	if (m_pRoot) {
 		delete m_pRoot;
-		m_pRoot = new MyOctant(2,5);
+		m_pRoot = new MyOctant(3,5);
 	}
 
 	
