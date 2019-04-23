@@ -47,7 +47,31 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther)
 {
 	Player* temp = Player::GetInstance();
 
-	if (a_pOther->GetUniqueID() != "ground" && temp->GetGameTime() < temp->GetGameTimeStart() - 0.0000000000000000001f) 
+	if (a_pOther->GetType() == "FenceLeft") {
+		vector3 warpPos = this->GetPos();
+
+		warpPos.x = MapSize - 5;
+		this->SetPos(warpPos);
+	}
+	else if (a_pOther->GetType() == "FenceRight") {
+		vector3 warpPos = this->GetPos();
+
+		warpPos.x = 0;
+		this->SetPos(warpPos);
+	}
+	else if (a_pOther->GetType() == "FenceTop") {
+		vector3 warpPos = this->GetPos();
+
+		warpPos.z = MapSize - 5;
+		this->SetPos(warpPos);
+	}
+	else if (a_pOther->GetType() == "FenceBottom") {
+		vector3 warpPos = this->GetPos();
+
+		warpPos.z = 0;
+		this->SetPos(warpPos);
+	}
+	else if (a_pOther->GetUniqueID() != "ground" && temp->GetGameTime() < temp->GetGameTimeStart() - 0.0000000000000000001f) 
 	{	
 		// cout << "Pig hit Pig" << endl; // limit this by timer for start
 
@@ -72,4 +96,5 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther)
 
 		this->SetModelMatrix(newMat4); // collision resolution between pigs
 	}
+
 }

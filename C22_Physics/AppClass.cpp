@@ -21,21 +21,64 @@ void Application::InitVariables(void)
 
 	m_pEntityMngr->UsePhysicsSolver(false);
 
+	// m_pCameraMngr->SetFOV(101);
+	// m_pCameraMngr->GetCamera(0).set
+
 	float playerScale = 0.01f;
 	m_player->SetModelMatrix(glm::translate(vector3(MAP_SIZE/2, 80, MAP_SIZE/2)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
-	m_cameraOffset = vector3(0, 6, 0);
-	
+	m_cameraOffset = vector3(0, 6, 0); // this was set to 6
 
 	
-
+	// ground
 	MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	temp->SetType("Ground");
 
-	vector3 v3Position = vector3(-5,0,-5);
+	vector3 v3Position = vector3(-5, 0, -5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(MAP_SIZE, 1, MAP_SIZE)));
 	m_pEntityMngr->UsePhysicsSolver(false);
+
+
+	m_pMeshMngr->GenerateCube(MAP_SIZE * 2, C_BLACK);
+
+	// m_pEntityMngr->AddEntity(m_pMeshMngr->GenerateCube(MAP_SIZE * 2, C_BLACK), "", "BlackBox");
+
+	// MyMesh* blackBox = new Mesh()GenerateCube(MAP_SIZE * 2, C_BLACK)
+
+	// endscreen object
+	MyEntity* endScreen = m_pEntityMngr->AddEntity("GameScreens\\GameStates.obj", "EndScreen", "EndScreen");
+	//v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2);
+	//m4Position = glm::translate(v3Position);
+	// m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_X) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y)); // This is for the end state screen
+	
+	v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2 - 20);
+	m4Position = glm::translate(v3Position);
+	m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)); // this is the rotation needed for the title screen
+
+	// left wall of "fences"
+	for (int i = 0; i < 20; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceLeft", "FenceLeft");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_Z));
+	}
+
+	// right wall of fences
+	for (int i = 0; i < 20; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceRight", "FenceRight");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(MAP_SIZE - 5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_Z));
+	}
+
+	// top wall of fences
+	for (int i = 0; i < 20; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceTop", "FenceTop");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_X));
+	}
+
+	// bottom wall of fences
+	for (int i = 0; i < 20; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceBottom", "FenceBottom");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, MAP_SIZE - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X));
+	}
 
 	
 
@@ -97,15 +140,13 @@ void Application::Update(void)
 	//Is the ArcBall active?
 	//ArcBall();
 
-	
-
 	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
 	//Set the position and target of the camera
 	m_pCameraMngr->SetPositionTargetAndUpward(
-		camPosition, //Position
-		m_player->GetPosition(),	//Target
-		-AXIS_Z);					//Up
+		camPosition,				// Position
+		m_player->GetPosition(),	// Target
+		-AXIS_Z);					// Up
 
 	//Update Entity Manager
 	m_pEntityMngr->Update();
@@ -117,7 +158,22 @@ void Application::Update(void)
 	m_pEntityMngr->AddEntityToRenderList(-1, true);
 	//m_pEntityMngr->AddEntityToRenderList(-1, true);
 
+	// set endgame state
+	if (m_player->GetGameTime() <= 0.0) {
+		
+		vector3 v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2);
+		matrix4 m4Position = glm::translate(v3Position);
+		
+		m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("EndScreen"))->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_X) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y)); // This is for the end state screen
 
+		camPosition = vector3(MAP_SIZE / 2, 80, MAP_SIZE / 2) + m_cameraOffset;
+
+		m_pCameraMngr->SetPositionTargetAndUpward(
+			camPosition,			// Position
+			vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2),
+			AXIS_Z);
+		m_player->SetGameTime(0.0);
+	}
 
 
 }

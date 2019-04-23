@@ -10,6 +10,7 @@ namespace Simplex
 	{
 	private:
 		float m_fStartingTimer = 60.0f;
+		float MapSize = 200;
 	public:
 		Farmer(String a_sFileName, string type, String a_sUniqueID = "NA");
 		virtual void Update(float deltaTime);

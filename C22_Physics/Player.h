@@ -12,7 +12,7 @@ namespace Simplex
 	private:
 		float m_fCooldownTimer = 0.0f;
 		float m_fStartingTimer = 1.0f;
-		float m_fgameTimeStart = 60.0f;
+		float m_fgameTimeStart = 1.0f;
 		float m_fgameTimer = m_fgameTimeStart;
 		int m_score = 0;
 		static Player* m_instance;
@@ -25,6 +25,7 @@ namespace Simplex
 		void AddPoints(MyEntity* other);
 		int GetScore() { return m_score; }
 		float GetGameTime() { return m_fgameTimer; } // game timer accessor
+		void SetGameTime(float time) { m_fgameTimer = time; }
 		float GetGameTimeStart() { return m_fgameTimeStart; }
 		virtual ~Player();
 	};

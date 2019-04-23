@@ -16,6 +16,8 @@ Date: 2017/06
 
 #include "MyEntityManager.h"
 
+// #include "MyMesh.h"
+
 namespace Simplex
 {
 
@@ -70,7 +72,7 @@ private:
 
 	Player* m_player;
 	vector3 m_cameraOffset;
-
+	MyEntity* m_endScreen;
 	const float MAP_SIZE = 200;
 	const int ENEMY_COUNT = 20;
 	
