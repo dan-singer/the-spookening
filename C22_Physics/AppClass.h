@@ -78,6 +78,8 @@ private:
 	
 	MyOctant* m_pRoot;
 
+	bool m_displayOctree = false;
+
 public:
 #pragma region Constructor / Run / Destructor
 	/*

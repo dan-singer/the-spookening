@@ -148,7 +148,8 @@ void Application::Display(void)
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
 
-	m_pRoot->Display();
+	if (m_displayOctree)
+		m_pRoot->Display();
 
 	m_pMeshMngr->Render();
 
