@@ -168,6 +168,7 @@ Simplex::MyEntityManager::~MyEntityManager(){Release();};
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
+
 	//Clear all collisions and update all entities
 	float fDelta = SystemSingleton::GetInstance()->GetDeltaTime(m_clock);
 	for (uint i = 0; i < m_uEntityCount; i++)
@@ -183,16 +184,16 @@ void Simplex::MyEntityManager::Update(void)
 	}
 	
 	//check collisions
-	for (uint i = 0; i < m_uEntityCount; i++)
+	for (uint i = 0; i < m_uEntityCount - 1; i++)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)
 		{
-			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) {
+			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
+			{
 				m_mEntityArray[i]->ResolveCollision(m_mEntityArray[j]);
 				m_mEntityArray[j]->ResolveCollision(m_mEntityArray[i]);
 			}
 		}
-		m_mEntityArray[i]->Update();
 	}
 }
 MyEntity* Simplex::MyEntityManager::AddEntity(String a_sFileName, string name, String a_sUniqueID)

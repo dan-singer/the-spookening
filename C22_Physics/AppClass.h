@@ -16,6 +16,8 @@ Date: 2017/06
 
 #include "MyEntityManager.h"
 
+#include "MyOctant.h"
+
 namespace Simplex
 {
 
@@ -72,9 +74,9 @@ private:
 	vector3 m_cameraOffset;
 
 	const float MAP_SIZE = 200;
-	const int ENEMY_COUNT = 20;
+	const int ENEMY_COUNT = 250;
 	
-	
+	MyOctant* m_pRoot;
 
 public:
 #pragma region Constructor / Run / Destructor
