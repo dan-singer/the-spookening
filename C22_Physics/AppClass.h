@@ -56,6 +56,7 @@ private:
 	vector4 m_v4ClearColor; //Color of the scene
 	bool m_bRunning = false; //Is App running?
 	bool m_bModifier = false; //is shift pressed?
+	bool m_bStartGame = false; // has game started?
 
 	sf::Window* m_pWindow = nullptr; //SFML window
 	SystemSingleton* m_pSystem = nullptr; //Singleton of the system
@@ -72,14 +73,14 @@ private:
 
 	Player* m_player;
 	vector3 m_cameraOffset;
-
-	const float MAP_SIZE = 200;
-	const int ENEMY_COUNT = 250;
-	
+	MyEntity* m_endScreen;
+	const float MAP_SIZE = 300; // this always should be divisible by 10 or Nick will be REAL BIG SAD
+	const int ENEMY_COUNT = 325; // lower this to improcve but idk
+	const float PIPES_PER_SIDE = MAP_SIZE / 10;
 	MyOctant* m_pRoot;
 
 	bool m_displayOctree = false;
-
+	bool m_bLoadOctree = false;
 public:
 #pragma region Constructor / Run / Destructor
 	/*

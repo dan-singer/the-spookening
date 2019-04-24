@@ -104,6 +104,12 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		break;
 	case sf::Keyboard::Subtract:
 		break;
+	case sf::Keyboard::Return:
+		m_bStartGame = true; // should start the game when pressed
+		break;
+	case sf::Keyboard::Q:
+		m_bLoadOctree = !m_bLoadOctree;
+		break;
 	case sf::Keyboard::LShift:
 	case sf::Keyboard::RShift:
 		m_bModifier = false;

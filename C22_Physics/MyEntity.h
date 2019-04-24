@@ -43,6 +43,8 @@ class MyEntity
 
 	matrix4 m_m4ViewMatrix;
 
+	float mapSize = 0;
+
 public:
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
@@ -240,6 +242,7 @@ public:
 	void SetDir(vector3 dir);
 	void SetType(string _type);
 	void SetScale(vector3 scale);
+	void SetMapSize(float size);
 
 	string GetType();
 
@@ -248,6 +251,8 @@ public:
 	vector3 GetDir();
 
 	vector3 GetScale();
+
+	float GetMapSize();
 
 	/*
 	USAGE: Gets the position of the solver

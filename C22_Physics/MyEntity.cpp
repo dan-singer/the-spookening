@@ -45,6 +45,7 @@ void Simplex::MyEntity::SetPosition(vector3 a_v3Position) { if(m_pSolver) m_pSol
 void Simplex::MyEntity::SetPos(vector3 pos) { position = pos; }
 void Simplex::MyEntity::SetDir(vector3 dir) { direction = dir; }
 void Simplex::MyEntity::SetType(string _type) { type = _type; }
+void Simplex::MyEntity::SetMapSize(float size) { mapSize = size; }
 void Simplex::MyEntity::SetScale(vector3 scale)
 {
 	this->scale = scale;
@@ -52,6 +53,7 @@ void Simplex::MyEntity::SetScale(vector3 scale)
 string Simplex::MyEntity::GetType() { return type; }
 vector3 Simplex::MyEntity::GetPos() { return position; }
 vector3 Simplex::MyEntity::GetDir() { return direction; }
+float Simplex::MyEntity::GetMapSize() { return mapSize; }
 
 vector3 Simplex::MyEntity::GetScale()
 {

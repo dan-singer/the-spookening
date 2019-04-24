@@ -7,7 +7,7 @@ using namespace std;
 
 // variables
 uint MyOctant::m_uOctantCount = 0;
-uint MyOctant::m_uMaxLevel = 3;
+uint MyOctant::m_uMaxLevel = 5;
 uint MyOctant::m_uIdealEntityCount = 5;
 
 // accessers

@@ -8,8 +8,7 @@ using namespace Simplex;
 
 
 
-void Application::InitVariables(void)
-{
+void Application::InitVariables(void) {
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
@@ -23,21 +22,53 @@ void Application::InitVariables(void)
 
 	float playerScale = 0.01f;
 	m_player->SetModelMatrix(glm::translate(vector3(MAP_SIZE/2, 80, MAP_SIZE/2)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
-	m_cameraOffset = vector3(0, 6, 0);
-	
+	m_cameraOffset = vector3(0, 6, 0); // this was set to 6
 
-	
-
+	// ground
 	MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	temp->SetType("Ground");
 
-	vector3 v3Position = vector3(-5,0,-5);
+	vector3 v3Position = vector3(-5, -10, -5);
 	v3Position.y = 0.0f;
 	matrix4 m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(m4Position * glm::scale(vector3(MAP_SIZE, 1, MAP_SIZE)));
 	m_pEntityMngr->UsePhysicsSolver(false);
 
-	
+	// endscreen object
+	MyEntity* endScreen = m_pEntityMngr->AddEntity("GameScreens\\GameStates.obj", "EndScreen", "EndScreen");
+	v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2 - 20);
+	m4Position = glm::translate(v3Position);
+	endScreen->SetModelMatrix((glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)));
+	//m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)); // this is the rotation needed for the title screen
+
+	temp = m_pEntityMngr->AddEntity("GameScreens\\black.obj", "", "BlackBox");
+	v3Position = vector3(MAP_SIZE/2, 300, MAP_SIZE/2);
+	//m4Position = glm::translate(v3Position);
+	m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(10)));
+
+	// left wall of "fences"
+	for (int i = 0; i < PIPES_PER_SIDE; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceLeft", "FenceLeft");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_Z));
+	}
+
+	// right wall of fences
+	for (int i = 0; i < PIPES_PER_SIDE; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceRight", "FenceRight");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(MAP_SIZE - 5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_Z));
+	}
+
+	// top wall of fences
+	for (int i = 0; i < PIPES_PER_SIDE; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceTop", "FenceTop");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_X));
+	}
+
+	// bottom wall of fences
+	for (int i = 0; i < PIPES_PER_SIDE; i++) {
+		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceBottom", "FenceBottom");
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, MAP_SIZE - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X));
+	}
 
 	// seed random
 	srand(time(NULL));
@@ -48,97 +79,110 @@ void Application::InitVariables(void)
 		SpawnType spawnType = static_cast<SpawnType>(rand() % (int)SpawnType::NUM_TYPES);
 
 		MyEntity* temp = nullptr;
-		if (spawnType == SpawnType::Farmer)
-		{
+		if (spawnType == SpawnType::Farmer) {
 			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(i));
 		}
-		else if (spawnType == SpawnType::Pig) 
-		{
+		else if (spawnType == SpawnType::Pig) {
 			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(i));
 		}
 
 		// create a random position
-		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 0, rand() % (int)MAP_SIZE);
+		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
 		temp->SetPos(v3Position);
 		
-
 		// create a random direction
 		vector3 v3Direction = vector3(rand() % 2, 0, rand() % 2);
 
 		// check that both values are not zero
-		if (v3Direction.x == 0 && v3Direction.z == 0)
-		{
+		if (v3Direction.x == 0 && v3Direction.z == 0) {
 			// if so, set one of the values to 1
 			if (rand() % 2 > 0) { v3Direction.x = 1; }
 			else { v3Direction.z = 1; }
 		}
 
-		cout << "X: " << v3Position.x << " Z: " << v3Position.z << endl;
-
 		// set the direction
 		temp->SetDir(v3Direction);
+		temp->SetMapSize(MAP_SIZE);
 
 		Farmer* farmer = dynamic_cast<Farmer*>(temp);
-		if (farmer)
-		{
+		if (farmer) {
 			farmer->calcRot();
 		}
-
 		m_pEntityMngr->AddEntity(temp);
 	}
 
-	m_pRoot = new MyOctant(2,5);
+	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
 	m_pEntityMngr->Update();
-
-	// m_pSystem->StartTimerOnClock(1.0f, 1);
-	// CountDown(); // timer start
-	// m_pSystem->GetTimeSinceStart(1);
-	// cout << "Time: " << m_pSystem->GetTimeSinceStart(1) << endl;
 }
 
+void Application::Update(void) {
+	if (m_bStartGame) {
 
+		//Update the system so it knows how much time has passed since the last call
+		m_pSystem->Update();
 
+		m_pCameraMngr->SetFOV(45);
 
+		// need to turn off the octree 
+		if (m_bLoadOctree) {
+			if (m_pRoot) {
+				delete m_pRoot;
+				m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
+			}
+		}
+		else {
+			delete m_pRoot;
+			m_pRoot = new MyOctant(0, 5);
+		}
+		
 
-void Application::Update(void)
-{
-	//Update the system so it knows how much time has passed since the last call
-	m_pSystem->Update();
+		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
-	//Is the ArcBall active?
-	//ArcBall();
+		//Set the position and target of the camera
+		m_pCameraMngr->SetPositionTargetAndUpward(
+			camPosition,				// Position
+			m_player->GetPosition(),	// Target
+			-AXIS_Z);					// Up
 
-	if (m_pRoot) {
-		delete m_pRoot;
-		m_pRoot = new MyOctant(2,5);
+		// set endgame state
+		if (m_player->GetGameTime() <= 0.0) {
+			m_pCameraMngr->SetFOV(101);
+			vector3 v3Position = vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2);
+			matrix4 m4Position = glm::translate(v3Position);
+
+			m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("EndScreen"))->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_X) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y)); // This is for the end state screen
+			camPosition = vector3(MAP_SIZE / 2, 80, MAP_SIZE / 2) + m_cameraOffset;
+
+			m_pCameraMngr->SetPositionTargetAndUpward(
+				camPosition,			// Position
+				vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2),
+				AXIS_Z);
+			m_player->SetGameTime(0.0);
+		}
+
+		//Update Entity Manager
+		m_pEntityMngr->Update();
+
+		//Add objects to render list
+		m_pEntityMngr->AddEntityToRenderList(-1, true);
 	}
+	else {
+		m_player->SetGameTime(m_player->GetGameTimeStart()); // resets the timer to show the correct starting time amount on game start
 
-	
+		//Add objects to render list
+		m_pEntityMngr->AddEntityToRenderList(2, true);
+		m_pEntityMngr->AddEntityToRenderList(3, true);
 
-	vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
+		m_pCameraMngr->SetFOV(101);
+		vector3 camPosition = vector3(MAP_SIZE / 2, 80, MAP_SIZE / 2) + m_cameraOffset;
 
-	//Set the position and target of the camera
-	m_pCameraMngr->SetPositionTargetAndUpward(
-		camPosition, //Position
-		m_player->GetPosition(),	//Target
-		-AXIS_Z);					//Up
-
-	//Update Entity Manager
-	m_pEntityMngr->Update();
-
-	//Set the model matrix for the main object
-	//m_pEntityMngr->SetModelMatrix(m_m4Steve, "Steve");
-
-	//Add objects to render list
-	m_pEntityMngr->AddEntityToRenderList(-1, true);
-	//m_pEntityMngr->AddEntityToRenderList(-1, true);
-
-
-
-
+		m_pCameraMngr->SetPositionTargetAndUpward(
+			camPosition,			// Position
+			vector3(MAP_SIZE / 2, 200, MAP_SIZE / 2),
+			AXIS_Z);
+	}
 }
-void Application::Display(void)
-{
+void Application::Display(void) {
 	// Clear the screen
 	ClearScreen();
 
@@ -162,8 +206,7 @@ void Application::Display(void)
 	//end the current frame (internally swaps the front and back buffers)
 	m_pWindow->display();
 }
-void Application::Release(void)
-{
+void Application::Release(void) {
 	//Release MyEntityManager
 	MyEntityManager::ReleaseInstance();
 

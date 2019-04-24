@@ -171,16 +171,16 @@ void Simplex::MyEntityManager::Update(void)
 
 	//Clear all collisions and update all entities
 	float fDelta = SystemSingleton::GetInstance()->GetDeltaTime(m_clock);
+
+	if (fDelta > 1 / 12.0f) {
+		fDelta = 1 / 12.0f;
+	}
+
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
-
 		m_mEntityArray[i]->ClearCollisionList();
 		
-		// m_mEntityArray[i]->Update();
-		
-		
 		m_mEntityArray[i]->Update(fDelta);
-		
 	}
 	
 	//check collisions
