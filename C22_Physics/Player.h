@@ -12,7 +12,7 @@ namespace Simplex
 	private:
 		float m_fCooldownTimer = 0.0f;
 		float m_fStartingTimer = 1.0f;
-		float m_fgameTimeStart = 60.0f;
+		float m_fgameTimeStart = 60.0f; // 4:45 
 		float m_fgameTimer = m_fgameTimeStart;
 		int m_score = 0;
 		static Player* m_instance;

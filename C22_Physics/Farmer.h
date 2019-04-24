@@ -10,7 +10,7 @@ namespace Simplex
 	{
 	private:
 		float m_fStartingTimer = 60.0f;
-		float MapSize = 200;
+		// float m_fMapSize = 500;
 		matrix4 matrixRot4;
 		bool wasColliding = false;
 	public:
@@ -19,6 +19,7 @@ namespace Simplex
 		virtual ~Farmer();
 		void ResolveCollision(MyEntity* a_pOther);
 		void calcRot();
+		// void SetMapSize(float size) { m_fMapSize = size; }
 	};
 }
 
