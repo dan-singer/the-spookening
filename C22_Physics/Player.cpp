@@ -33,6 +33,9 @@ void Simplex::Player::DropEgg()
 		manager->UsePhysicsSolver(false);
 
 		m_fCooldownTimer = m_fStartingTimer;
+
+		// cluck
+		cluck = true;
 	}
 }
 

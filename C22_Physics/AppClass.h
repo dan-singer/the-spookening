@@ -33,7 +33,7 @@ class Application
 	MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 private:
 	//TODO update
-	String m_sProgrammer = "The Spooky Chickens - The Spookening"; //programmer
+	String m_sProgrammer = "The Spooky Chickens - The Spookin'"; //programmer
 
 	static ImGuiObject gui; //GUI object
 	bool m_bGUI_Main = true; //show Main GUI window?
@@ -67,9 +67,9 @@ private:
 	ControllerInput* m_pController[8]; //Controller
 	uint m_uActCont = 0; //Active Controller of the Application
 
-	sf::SoundBuffer m_soundBuffer; //buffer to play sound from
-	sf::Sound m_sound; //sound effect
-	sf::Music m_soundBGM; //background music
+	sf::SoundBuffer* m_soundBuffer = nullptr; //buffer to play sound from
+	sf::Sound* m_sound = nullptr; //sound effect
+	sf::Music* m_soundBGM = nullptr; //background music
 
 	Player* m_player;
 	vector3 m_cameraOffset;

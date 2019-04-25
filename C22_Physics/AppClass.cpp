@@ -9,6 +9,12 @@ using namespace Simplex;
 
 
 void Application::InitVariables(void) {
+	// background music
+	m_soundBGM = new sf::Music();
+	m_soundBGM->openFromFile("../_Binary/Data/Audio/Minecraft_Nether_Background_Music.wav");
+	m_soundBGM->setLoop(true);
+	m_soundBGM->play();
+
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
@@ -122,6 +128,19 @@ void Application::Update(void) {
 		m_pSystem->Update();
 
 		m_pCameraMngr->SetFOV(45);
+
+		// sound effect checks
+		if (m_player->GetCluck() == true)
+		{
+			m_soundBuffer = new sf::SoundBuffer();
+			m_soundBuffer->loadFromFile("../_Binary/Data/Audio/Minecraft_Nether_Background_Music.wav");
+
+			m_sound = new sf::Sound();
+			m_sound->setBuffer(m_soundBuffer);
+			m_sound->play();
+
+			m_player->SetCluck(false);
+		}
 
 		// need to turn off the octree 
 		if (m_bLoadOctree) {
