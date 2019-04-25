@@ -80,10 +80,12 @@ void Application::InitVariables(void) {
 
 		MyEntity* temp = nullptr;
 		if (spawnType == SpawnType::Farmer) {
-			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(i));
+			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(numFarmers));
+			numFarmers++;
 		}
 		else if (spawnType == SpawnType::Pig) {
-			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(i));
+			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(numPigs));
+			numPigs++;
 		}
 
 		// create a random position
@@ -111,8 +113,36 @@ void Application::InitVariables(void) {
 		m_pEntityMngr->AddEntity(temp);
 	}
 
+	
+
+	// spawning loop for the static objects
+	for (int i = 0; i < STATIC_COUNT; i++) {
+		StaticType staticType = static_cast<StaticType>(rand() % (int)StaticType::NUM_TYPES);
+
+		MyEntity* temp = nullptr;
+		if (staticType == StaticType::Rock) {
+			// spawn rock object
+			temp = new MyEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
+			numRocks++;
+		}
+		else if (staticType == StaticType::Tree) {
+			// spawn tree object
+			temp = new MyEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
+			numTrees++;
+		}
+
+		// do this within a check for octree collisions stuff
+		// set positions
+		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
+		temp->SetPos(v3Position);
+		m_pEntityMngr->AddEntity(temp);
+	}
+	
+	/*
 	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
 	m_pEntityMngr->Update();
+	*/
+
 }
 
 void Application::Update(void) {
@@ -123,6 +153,7 @@ void Application::Update(void) {
 
 		m_pCameraMngr->SetFOV(45);
 
+		/*
 		// need to turn off the octree 
 		if (m_bLoadOctree) {
 			if (m_pRoot) {
@@ -134,7 +165,7 @@ void Application::Update(void) {
 			delete m_pRoot;
 			m_pRoot = new MyOctant(0, 5);
 		}
-		
+		*/
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
