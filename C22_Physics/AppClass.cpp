@@ -3,6 +3,7 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
+#include "StaticEntity.h"
 using namespace std;
 using namespace Simplex;
 
@@ -119,29 +120,29 @@ void Application::InitVariables(void) {
 	for (int i = 0; i < STATIC_COUNT; i++) {
 		StaticType staticType = static_cast<StaticType>(rand() % (int)StaticType::NUM_TYPES);
 
-		MyEntity* temp = nullptr;
+		MyEntity* spawnedStaticObject = nullptr;
 		if (staticType == StaticType::Rock) {
 			// spawn rock object
-			temp = new MyEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
+			spawnedStaticObject = new StaticEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
 			numRocks++;
 		}
 		else if (staticType == StaticType::Tree) {
 			// spawn tree object
-			temp = new MyEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
+			spawnedStaticObject = new StaticEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
 			numTrees++;
 		}
 
 		// do this within a check for octree collisions stuff
 		// set positions
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
-		temp->SetPos(v3Position);
-		m_pEntityMngr->AddEntity(temp);
+		spawnedStaticObject->SetPos(v3Position);
+		spawnedStaticObject->SetScale(vector3(0.1f, 0.1f, 0.1f));
+		m_pEntityMngr->AddEntity(spawnedStaticObject);
 	}
 	
-	/*
-	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
 	m_pEntityMngr->Update();
-	*/
+	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
+	
 
 }
 
@@ -153,19 +154,19 @@ void Application::Update(void) {
 
 		m_pCameraMngr->SetFOV(45);
 
-		/*
+		
 		// need to turn off the octree 
-		if (m_bLoadOctree) {
-			if (m_pRoot) {
-				delete m_pRoot;
-				m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
-			}
-		}
-		else {
-			delete m_pRoot;
-			m_pRoot = new MyOctant(0, 5);
-		}
-		*/
+		//if (m_bLoadOctree) {
+		//	if (m_pRoot) {
+		//		delete m_pRoot;
+		//		m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
+		//	}
+		//}
+		//else {
+		//	delete m_pRoot;
+		//	m_pRoot = new MyOctant(0, 5);
+		//}
+		
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 

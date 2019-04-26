@@ -82,7 +82,7 @@ private:
 	MyEntity* m_endScreen;
 	const float MAP_SIZE = 300; // this always should be divisible by 10 or Nick will be REAL BIG SAD
 	const int ENEMY_COUNT = 250; // lower this to improcve but idk
-	const int STATIC_COUNT = 100; // this is the number of static objects getting spawned
+	const int STATIC_COUNT = 500; // this is the number of static objects getting spawned
 	const float PIPES_PER_SIDE = MAP_SIZE / 10;
 	MyOctant* m_pRoot;
 

@@ -1,4 +1,5 @@
 #include "MyEntityManager.h"
+#include <algorithm>
 using namespace Simplex;
 //  MyEntityManager
 Simplex::MyEntityManager* Simplex::MyEntityManager::m_pInstance = nullptr;
@@ -228,6 +229,13 @@ void Simplex::MyEntityManager::AddEntity(MyEntity* entity)
 		m_mEntityArray = tempArray;
 		//add one entity to the count
 		++m_uEntityCount;
+
+		// If this is a static entity, keep track of it separately
+		StaticEntity* statEnt = dynamic_cast<StaticEntity*>(entity);
+		if (statEnt)
+		{
+			m_mStaticEntities.push_back(statEnt);
+		}
 	}
 }
 
@@ -255,6 +263,14 @@ void Simplex::MyEntityManager::RemoveEntity(uint a_uIndex)
 	{
 		tempArray[i] = m_mEntityArray[i];
 	}
+
+	// Remove this from the static entities array if necessary
+	StaticEntity* statEnt = dynamic_cast<StaticEntity*>(m_mEntityArray[m_uEntityCount - 1]);
+	if (statEnt)
+	{
+		m_mStaticEntities.erase(std::remove(m_mStaticEntities.begin(), m_mStaticEntities.end(), statEnt));
+	}
+
 	//if there was an older array delete
 	if (m_mEntityArray)
 	{
@@ -531,4 +547,9 @@ void Simplex::MyEntityManager::UsePhysicsSolver(bool a_bUse, uint a_uIndex)
 		a_uIndex = m_uEntityCount - 1;
 
 	return m_mEntityArray[a_uIndex]->UsePhysicsSolver(a_bUse);
+}
+
+std::vector<StaticEntity*>& Simplex::MyEntityManager::GetStaticEntities()
+{
+	return m_mStaticEntities;
 }
