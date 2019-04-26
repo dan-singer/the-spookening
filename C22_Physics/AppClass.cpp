@@ -142,7 +142,7 @@ void Application::InitVariables(void) {
 	}
 	
 	m_pEntityMngr->Update();
-	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
+	m_pRoot = new MyOctant(m_uOctantLevels,5); // also please dont touch this, begging you yadda yadda
 	
 
 }
