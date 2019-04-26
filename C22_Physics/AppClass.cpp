@@ -124,11 +124,13 @@ void Application::InitVariables(void) {
 		if (staticType == StaticType::Rock) {
 			// spawn rock object
 			spawnedStaticObject = new StaticEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
+			spawnedStaticObject->SetScale(vector3(0.1f, 0.1f, 0.1f));
 			numRocks++;
 		}
 		else if (staticType == StaticType::Tree) {
 			// spawn tree object
 			spawnedStaticObject = new StaticEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
+			spawnedStaticObject->SetScale(vector3(0.2f, 0.2f, 0.2f));
 			numTrees++;
 		}
 
@@ -136,7 +138,6 @@ void Application::InitVariables(void) {
 		// set positions
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
 		spawnedStaticObject->SetPos(v3Position);
-		spawnedStaticObject->SetScale(vector3(0.1f, 0.1f, 0.1f));
 		m_pEntityMngr->AddEntity(spawnedStaticObject);
 	}
 	
