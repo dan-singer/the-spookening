@@ -131,7 +131,8 @@ void Application::InitVariables(void) {
 
 		// do this within a check for octree collisions stuff
 		// set positions
-		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
+
+		vector3 v3Position = vector3(rand() % (int)(MAP_SIZE - MARGIN * 2) + MARGIN, 1.1, rand() % (int)(MAP_SIZE - MARGIN * 2));
 		spawnedStaticObject->SetPos(v3Position);
 		m_pEntityMngr->AddEntity(spawnedStaticObject);
 	}
@@ -150,20 +151,6 @@ void Application::Update(void) {
 		m_pSystem->Update();
 
 		m_pCameraMngr->SetFOV(45);
-
-		
-		// need to turn off the octree 
-		//if (m_bLoadOctree) {
-		//	if (m_pRoot) {
-		//		delete m_pRoot;
-		//		m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
-		//	}
-		//}
-		//else {
-		//	delete m_pRoot;
-		//	m_pRoot = new MyOctant(0, 5);
-		//}
-		
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 

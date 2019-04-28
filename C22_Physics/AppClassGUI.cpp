@@ -9,7 +9,7 @@ void Application::DrawGUI(void)
 	for (uint i = 0; i < nEmptyLines; ++i)
 		m_pMeshMngr->PrintLine("");//Add a line on top
 	//m_pMeshMngr->Print("						");
-	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), C_YELLOW);
+	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), C_YELLOW);
 	//m_pMeshMngr->Print("						");
 
 	//m_pMeshMngr->Print("						");

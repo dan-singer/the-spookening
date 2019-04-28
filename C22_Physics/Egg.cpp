@@ -43,7 +43,7 @@ void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 		{
 			MyEntity* bacon = new MyEntity("Breakfast\\model.obj", "");
 			MyEntityManager::GetInstance()->AddEntity(bacon);
-			bacon->SetModelMatrix(glm::translate(GetPosition()) * glm::scale(bacon->GetModelMatrix(), vector3(5.0f)));
+			bacon->SetModelMatrix(glm::translate(GetPosition() + vector3(0, -1.0f, 0)) * glm::scale(bacon->GetModelMatrix(), vector3(5.0f)));
 		}
 		else if (a_pOther->GetType() == "Farmer")
 		{
@@ -51,6 +51,9 @@ void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 			MyEntityManager::GetInstance()->AddEntity(grave);
 			grave->SetModelMatrix(glm::translate(GetPosition() + vector3(0,-7.5f,0)) * glm::scale(grave->GetModelMatrix(), vector3(0.3f)));
 		}
+
+		// Remove this entity immediately if collided with pig or farmer
+		MyEntityManager::GetInstance()->RemoveEntity(GetUniqueID());
 
 		MyEntityManager::GetInstance()->RemoveEntity(a_pOther->GetUniqueID());
 		Player::GetInstance()->AddPoints(a_pOther);
