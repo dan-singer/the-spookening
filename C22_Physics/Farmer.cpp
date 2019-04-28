@@ -118,6 +118,13 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
         // calculate the final rotation matrix
         matrix4 rotation = rot * rotY;
 
+		// Get the center of the two entities
+		vector3 center = (GetPos() + a_pOther->GetPos()) / 2.0f;
+		// Add to position based on this
+		vector3 offset = (GetPos() - center);
+		offset /= offset.length();
+		SetPos(GetPos() + offset);
+
         // create a new matrix with the postion, rotation, and scale
         matrix4 newMat4 = glm::translate(this->GetPos()) * rotation * glm::scale(vector3(2.0f));
         

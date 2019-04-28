@@ -104,11 +104,20 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		m_bStartGame = true; // should start the game when pressed
 		break;
 	case sf::Keyboard::Q:
-		m_bLoadOctree = !m_bLoadOctree;
+
 		break;
 	case sf::Keyboard::LShift:
+		m_pEntityMngr->ClearDimensionSetAll();
+		m_uOctantLevels = 2;
+		SafeDelete(m_pRoot);
+		m_pRoot = new MyOctant(m_uOctantLevels, 5);
+		break;
 	case sf::Keyboard::RShift:
-		m_bModifier = false;
+		m_pEntityMngr->ClearDimensionSetAll();
+		m_uOctantLevels = 0;
+		SafeDelete(m_pRoot);
+		m_pRoot = new MyOctant(m_uOctantLevels, 5);
+		break;
 	case sf::Keyboard::O:
 		m_displayOctree = !m_displayOctree;
 		break;

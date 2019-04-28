@@ -118,21 +118,12 @@ void Application::InitVariables(void) {
 
 	// spawning loop for the static objects
 	for (int i = 0; i < STATIC_COUNT; i++) {
-		StaticType staticType = static_cast<StaticType>(rand() % (int)StaticType::NUM_TYPES);
 
 		MyEntity* spawnedStaticObject = nullptr;
-		if (staticType == StaticType::Rock) {
-			// spawn rock object
-			spawnedStaticObject = new StaticEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
-			spawnedStaticObject->SetScale(vector3(0.1f, 0.1f, 0.1f));
-			numRocks++;
-		}
-		else if (staticType == StaticType::Tree) {
-			// spawn tree object
-			spawnedStaticObject = new StaticEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
-			spawnedStaticObject->SetScale(vector3(0.2f, 0.2f, 0.2f));
-			numTrees++;
-		}
+		// spawn rock object
+		spawnedStaticObject = new StaticEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
+		spawnedStaticObject->SetScale(vector3(0.05f, 0.05f, 0.05f));
+		numRocks++;
 
 		// do this within a check for octree collisions stuff
 		// set positions
