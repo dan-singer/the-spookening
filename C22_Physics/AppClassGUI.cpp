@@ -44,12 +44,7 @@ void Application::DrawGUI(void)
 				ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::Separator();
 			ImGui::Text("Control:\n");
-			// ImGui::Text("   Arrows: Movement\n");
-			// ImGui::Text("	 F1: Perspective\n");
-			// ImGui::Text("	 F2: Orthographic X\n");
-			// ImGui::Text("	 F3: Orthographic Y\n");
-			// ImGui::Text("	 F4: Orthographic Z\n");
-			// ImGui::Separator();
+			ImGui::Text("   Enter: Start the Game");
 			ImGui::Text("   Arrows: Move Chicken");
 			ImGui::Text("   Space: Drop Egg");
 			ImGui::Separator();

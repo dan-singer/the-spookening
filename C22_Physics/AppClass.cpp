@@ -10,6 +10,12 @@ using namespace Simplex;
 
 
 void Application::InitVariables(void) {
+	// background music
+	m_soundBGM = new sf::Music();
+	m_soundBGM->openFromFile("../_Binary/Data/Audio/Minecraft_Nether_Background_Music.wav");
+	m_soundBGM->setLoop(true);
+	m_soundBGM->play();
+
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
@@ -233,6 +239,10 @@ void Application::Display(void) {
 void Application::Release(void) {
 	//Release MyEntityManager
 	MyEntityManager::ReleaseInstance();
+
+	// clean up pointers
+	m_soundBGM = nullptr;
+	delete m_soundBGM;
 
 	//release GUI
 	ShutdownGUI();
