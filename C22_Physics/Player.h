@@ -16,7 +16,6 @@ namespace Simplex
 		float m_fgameTimer = m_fgameTimeStart;
 		int m_score = 0;
 		static Player* m_instance;
-		bool cluck = false;
 	public:
 		Player(String a_sFileName, string type, String a_sUniqueID = "NA");
 		static Player* GetInstance();
@@ -25,8 +24,6 @@ namespace Simplex
 		// Adds points to score based on with what it is colliding
 		void AddPoints(MyEntity* other);
 		int GetScore() { return m_score; }
-		bool GetCluck() { return cluck; }
-		void SetCluck(bool _cluck) { cluck = _cluck; }
 		float GetGameTime() { return m_fgameTimer; } // game timer accessor
 		void SetGameTime(float time) { m_fgameTimer = time; }
 		float GetGameTimeStart() { return m_fgameTimeStart; }

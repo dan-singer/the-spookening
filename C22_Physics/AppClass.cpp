@@ -129,19 +129,6 @@ void Application::Update(void) {
 
 		m_pCameraMngr->SetFOV(45);
 
-		// sound effect checks
-		if (m_player->GetCluck() == true)
-		{
-			m_soundBuffer = new sf::SoundBuffer();
-			m_soundBuffer->loadFromFile("../_Binary/Data/Audio/Minecraft_Nether_Background_Music.wav");
-
-			m_sound = new sf::Sound();
-			m_sound->setBuffer(m_soundBuffer);
-			m_sound->play();
-
-			m_player->SetCluck(false);
-		}
-
 		// need to turn off the octree 
 		if (m_bLoadOctree) {
 			if (m_pRoot) {
@@ -228,6 +215,10 @@ void Application::Display(void) {
 void Application::Release(void) {
 	//Release MyEntityManager
 	MyEntityManager::ReleaseInstance();
+
+	// clean up pointers
+	m_soundBGM = nullptr;
+	delete m_soundBGM;
 
 	//release GUI
 	ShutdownGUI();
