@@ -3,6 +3,8 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
+//#include <nanogui/nanogui.h>
+
 #include "StaticEntity.h"
 using namespace std;
 using namespace Simplex;
@@ -13,6 +15,8 @@ void Application::InitVariables(void) {
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
+	MyEntity* grave = new MyEntity("Grave\\grave.obj", "");
+
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
@@ -135,7 +139,8 @@ void Application::InitVariables(void) {
 	m_pEntityMngr->Update();
 	m_pRoot = new MyOctant(m_uOctantLevels,5); // also please dont touch this, begging you yadda yadda
 	
-
+	//nanogui::Button* b;
+	//nanogui::Button* b = new nanogui::Button(m_pWindow->getSystemHandle());
 }
 
 void Application::Update(void) {

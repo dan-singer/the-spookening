@@ -43,7 +43,13 @@ void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 		{
 			MyEntity* bacon = new MyEntity("Breakfast\\model.obj", "");
 			MyEntityManager::GetInstance()->AddEntity(bacon);
-			bacon->SetModelMatrix(glm::translate(GetPosition() + vector3(0, 0, 0)) * glm::scale(bacon->GetModelMatrix(), vector3(5.0f)));
+			bacon->SetModelMatrix(glm::translate(GetPosition()) * glm::scale(bacon->GetModelMatrix(), vector3(5.0f)));
+		}
+		else if (a_pOther->GetType() == "Farmer")
+		{
+			MyEntity* grave = new MyEntity("Grave\\grave.obj", "");
+			MyEntityManager::GetInstance()->AddEntity(grave);
+			grave->SetModelMatrix(glm::translate(GetPosition() + vector3(0,-7.5f,0)) * glm::scale(grave->GetModelMatrix(), vector3(0.3f)));
 		}
 
 		MyEntityManager::GetInstance()->RemoveEntity(a_pOther->GetUniqueID());
