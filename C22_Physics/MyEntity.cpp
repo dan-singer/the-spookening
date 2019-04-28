@@ -2,6 +2,7 @@
 using namespace Simplex;
 #include <stdlib.h>
 #include <time.h>
+#include "StaticEntity.h"
 using namespace std;
 
 std::map<String, MyEntity*> MyEntity::m_IDMap;
@@ -313,8 +314,16 @@ bool Simplex::MyEntity::IsColliding(MyEntity* const other)
 
 	//if the entities are not living in the same dimension
 	//they are not colliding
-	if (!SharesDimension(other))
-		return false;
+	StaticEntity* thisStat = dynamic_cast<StaticEntity*>(this);
+	StaticEntity* otherStat = dynamic_cast<StaticEntity*>(other);
+	if (thisStat && otherStat) 
+	{
+		if (!SharesDimension(other))
+		{
+			return false;
+		}
+	}
+
 
 	return m_pRigidBody->IsColliding(other->GetRigidBody());
 }

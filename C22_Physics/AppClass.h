@@ -27,6 +27,12 @@ enum class SpawnType {
 	NUM_TYPES
 };
 
+enum class StaticType {
+	Rock,
+	Tree,
+	NUM_TYPES
+};
+
 //Adding Application to the Simplex namespace
 class Application
 {
@@ -75,12 +81,17 @@ private:
 	vector3 m_cameraOffset;
 	MyEntity* m_endScreen;
 	const float MAP_SIZE = 300; // this always should be divisible by 10 or Nick will be REAL BIG SAD
-	const int ENEMY_COUNT = 325; // lower this to improcve but idk
+	const int ENEMY_COUNT = 100; // lower this to improcve but idk
+	const int STATIC_COUNT = 750; // this is the number of static objects getting spawned
 	const float PIPES_PER_SIDE = MAP_SIZE / 10;
 	MyOctant* m_pRoot;
 
 	bool m_displayOctree = false;
 	bool m_bLoadOctree = false;
+
+	int numRocks, numTrees, numFarmers, numPigs = 0;
+
+	uint m_uOctantLevels = 2;
 public:
 #pragma region Constructor / Run / Destructor
 	/*

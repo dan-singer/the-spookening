@@ -3,6 +3,7 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
+#include "StaticEntity.h"
 using namespace std;
 using namespace Simplex;
 
@@ -80,10 +81,12 @@ void Application::InitVariables(void) {
 
 		MyEntity* temp = nullptr;
 		if (spawnType == SpawnType::Farmer) {
-			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(i));
+			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(numFarmers));
+			numFarmers++;
 		}
 		else if (spawnType == SpawnType::Pig) {
-			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(i));
+			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(numPigs));
+			numPigs++;
 		}
 
 		// create a random position
@@ -111,8 +114,37 @@ void Application::InitVariables(void) {
 		m_pEntityMngr->AddEntity(temp);
 	}
 
-	m_pRoot = new MyOctant(5,5); // also please dont touch this, begging you yadda yadda
+	
+
+	// spawning loop for the static objects
+	for (int i = 0; i < STATIC_COUNT; i++) {
+		StaticType staticType = static_cast<StaticType>(rand() % (int)StaticType::NUM_TYPES);
+
+		MyEntity* spawnedStaticObject = nullptr;
+		if (staticType == StaticType::Rock) {
+			// spawn rock object
+			spawnedStaticObject = new StaticEntity("StaticObjects\\rock.obj", "Static", "Rock_" + std::to_string(numRocks));
+			spawnedStaticObject->SetScale(vector3(0.1f, 0.1f, 0.1f));
+			numRocks++;
+		}
+		else if (staticType == StaticType::Tree) {
+			// spawn tree object
+			spawnedStaticObject = new StaticEntity("StaticObjects\\Voxel_Tree_1.obj", "Static", "Tree_" + std::to_string(numTrees));
+			spawnedStaticObject->SetScale(vector3(0.2f, 0.2f, 0.2f));
+			numTrees++;
+		}
+
+		// do this within a check for octree collisions stuff
+		// set positions
+		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
+		spawnedStaticObject->SetPos(v3Position);
+		m_pEntityMngr->AddEntity(spawnedStaticObject);
+	}
+	
 	m_pEntityMngr->Update();
+	m_pRoot = new MyOctant(m_uOctantLevels,5); // also please dont touch this, begging you yadda yadda
+	
+
 }
 
 void Application::Update(void) {
@@ -123,17 +155,18 @@ void Application::Update(void) {
 
 		m_pCameraMngr->SetFOV(45);
 
+		
 		// need to turn off the octree 
-		if (m_bLoadOctree) {
-			if (m_pRoot) {
-				delete m_pRoot;
-				m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
-			}
-		}
-		else {
-			delete m_pRoot;
-			m_pRoot = new MyOctant(0, 5);
-		}
+		//if (m_bLoadOctree) {
+		//	if (m_pRoot) {
+		//		delete m_pRoot;
+		//		m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
+		//	}
+		//}
+		//else {
+		//	delete m_pRoot;
+		//	m_pRoot = new MyOctant(0, 5);
+		//}
 		
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;

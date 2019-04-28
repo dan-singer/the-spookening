@@ -63,11 +63,10 @@ MyOctant::MyOctant(uint maxLevel, uint idealEntityCount)
 	vector<vector3> lMinMax;
 
 	// for all of the objects, get their min/max in global space
-	uint numberObjects = m_pEntityMngr->GetEntityCount();
-	for (uint i = 0; i < numberObjects; i++)
+	std::vector<StaticEntity*>& statEnts = m_pEntityMngr->GetStaticEntities();
+	for (StaticEntity* statEnt : statEnts)
 	{
-		MyEntity* pEntity = m_pEntityMngr->GetEntity(i);
-		MyRigidBody* pRigidBody = pEntity->GetRigidBody();
+		MyRigidBody* pRigidBody = statEnt->GetRigidBody();
 
 		lMinMax.push_back(pRigidBody->GetMinGlobal());
 		lMinMax.push_back(pRigidBody->GetMaxGlobal());
@@ -327,18 +326,16 @@ void MyOctant::Subdivide(void)
 // checks if there is a collision with the specific entity at an index
 bool MyOctant::IsColliding(uint index)
 {
-	// get the number of entities
-	uint nObjectCount = m_pEntityMngr->GetEntityCount();
-
+	std::vector<StaticEntity*>& statEnts = m_pEntityMngr->GetStaticEntities();
 	// if the index is greater than or equal to the number of elements contained
-	if (index >= nObjectCount)
+	if (index >= statEnts.size())
 	{
 		// there is no collision
 		return false;
 	}
 
 	// variables
-	MyEntity* pEntity = m_pEntityMngr->GetEntity(index);
+	MyEntity* pEntity = statEnts[index];
 	MyRigidBody* pRigidBody = pEntity->GetRigidBody();
 	vector3 v3MinOther = pRigidBody->GetMinGlobal();
 	vector3 v3MaxOther = pRigidBody->GetMaxGlobal();
@@ -363,11 +360,12 @@ bool MyOctant::IsColliding(uint index)
 bool MyOctant::ContainsMoreThan(uint entities)
 {
 	// variables
-	uint nCount = 0;
-	uint nObjectCount = m_pEntityMngr->GetEntityCount();
+	int nCount = 0;
+	std::vector<StaticEntity*>& statEnts = m_pEntityMngr->GetStaticEntities();
+
 
 	// for all of the entities
-	for (uint i = 0; i < nObjectCount; i++)
+	for (uint i = 0; i < statEnts.size(); i++)
 	{
 		// if they are colliding, up the count
 		if (IsColliding(i)) { nCount++; }
@@ -394,7 +392,9 @@ void MyOctant::AssignIDtoEntity(void)
 	if (m_uChildren == 0)
 	{
 		// variables
-		uint nEntities = m_pEntityMngr->GetEntityCount();
+		std::vector<StaticEntity*>& statEnts = m_pEntityMngr->GetStaticEntities();
+
+		uint nEntities = statEnts.size();
 
 		// for all of the entities
 		for (uint i = 0; i < nEntities; i++)

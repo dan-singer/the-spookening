@@ -100,10 +100,6 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		break;
 	case sf::Keyboard::PageDown:
 		break;
-	case sf::Keyboard::Add:
-		break;
-	case sf::Keyboard::Subtract:
-		break;
 	case sf::Keyboard::Return:
 		m_bStartGame = true; // should start the game when pressed
 		break;
@@ -115,6 +111,24 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		m_bModifier = false;
 	case sf::Keyboard::O:
 		m_displayOctree = !m_displayOctree;
+		break;
+	case sf::Keyboard::Add:
+		if (m_uOctantLevels < 4)
+		{
+			m_pEntityMngr->ClearDimensionSetAll();
+			++m_uOctantLevels;
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5);
+		}
+		break;
+	case sf::Keyboard::Subtract:
+		if (m_uOctantLevels > 0)
+		{
+			m_pEntityMngr->ClearDimensionSetAll();
+			--m_uOctantLevels;
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5);
+		}
 		break;
 	}
 

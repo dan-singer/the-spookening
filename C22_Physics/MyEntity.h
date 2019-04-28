@@ -37,7 +37,7 @@ class MyEntity
 
 	vector3 direction = vector3();
 	vector3 position = vector3();
-	vector3 scale = vector3();
+	vector3 scale = vector3(1,1,1);
 	
 	float rotAngle = 0.0f;
 
