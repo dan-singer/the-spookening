@@ -343,10 +343,10 @@ void Simplex::MyEntityManager::AddDimension(uint a_uIndex, uint a_uDimension)
 		return;
 
 	//if the index is larger than the number of entries we are asking for the last one
-	if (a_uIndex >= m_uEntityCount)
-		a_uIndex = m_uEntityCount - 1;
+	if (a_uIndex >= m_mStaticEntities.size())
+		a_uIndex = m_mStaticEntities.size() - 1;
 
-	return m_mEntityArray[a_uIndex]->AddDimension(a_uDimension);
+	return m_mStaticEntities[a_uIndex]->AddDimension(a_uDimension);
 }
 void Simplex::MyEntityManager::AddDimension(String a_sUniqueID, uint a_uDimension)
 {
@@ -365,10 +365,10 @@ void Simplex::MyEntityManager::RemoveDimension(uint a_uIndex, uint a_uDimension)
 		return;
 
 	//if the index is larger than the number of entries we are asking for the last one
-	if (a_uIndex >= m_uEntityCount)
-		a_uIndex = m_uEntityCount - 1;
+	if (a_uIndex >= m_mStaticEntities.size())
+		a_uIndex = m_mStaticEntities.size() - 1;
 
-	return m_mEntityArray[a_uIndex]->RemoveDimension(a_uDimension);
+	return m_mStaticEntities[a_uIndex]->RemoveDimension(a_uDimension);
 }
 void Simplex::MyEntityManager::RemoveDimension(String a_sUniqueID, uint a_uDimension)
 {
@@ -382,7 +382,7 @@ void Simplex::MyEntityManager::RemoveDimension(String a_sUniqueID, uint a_uDimen
 }
 void Simplex::MyEntityManager::ClearDimensionSetAll(void)
 {
-	for (uint i = 0; i < m_uEntityCount; ++i)
+	for (uint i = 0; i < m_mStaticEntities.size(); ++i)
 	{
 		ClearDimensionSet(i);
 	}
@@ -394,10 +394,10 @@ void Simplex::MyEntityManager::ClearDimensionSet(uint a_uIndex)
 		return;
 
 	//if the index is larger than the number of entries we are asking for the last one
-	if (a_uIndex >= m_uEntityCount)
-		a_uIndex = m_uEntityCount - 1;
+	if (a_uIndex >= m_mStaticEntities.size())
+		a_uIndex = m_mStaticEntities.size() - 1;
 
-	return m_mEntityArray[a_uIndex]->ClearDimensionSet();
+	return m_mStaticEntities[a_uIndex]->ClearDimensionSet();
 }
 void Simplex::MyEntityManager::ClearDimensionSet(String a_sUniqueID)
 {
@@ -416,10 +416,10 @@ bool Simplex::MyEntityManager::IsInDimension(uint a_uIndex, uint a_uDimension)
 		return false;
 
 	//if the index is larger than the number of entries we are asking for the last one
-	if (a_uIndex >= m_uEntityCount)
-		a_uIndex = m_uEntityCount - 1;
+	if (a_uIndex >= m_mStaticEntities.size())
+		a_uIndex = m_mStaticEntities.size() - 1;
 
-	return m_mEntityArray[a_uIndex]->IsInDimension(a_uDimension);
+	return m_mStaticEntities[a_uIndex]->IsInDimension(a_uDimension);
 }
 bool Simplex::MyEntityManager::IsInDimension(String a_sUniqueID, uint a_uDimension)
 {
@@ -439,10 +439,10 @@ bool Simplex::MyEntityManager::SharesDimension(uint a_uIndex, MyEntity* const a_
 		return false;
 
 	//if the index is larger than the number of entries we are asking for the last one
-	if (a_uIndex >= m_uEntityCount)
-		a_uIndex = m_uEntityCount - 1;
+	if (a_uIndex >= m_mStaticEntities.size())
+		a_uIndex = m_mStaticEntities.size() - 1;
 
-	return m_mEntityArray[a_uIndex]->SharesDimension(a_pOther);
+	return m_mStaticEntities[a_uIndex]->SharesDimension(a_pOther);
 }
 bool Simplex::MyEntityManager::SharesDimension(String a_sUniqueID, MyEntity* const a_pOther)
 {
