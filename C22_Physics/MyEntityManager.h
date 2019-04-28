@@ -6,7 +6,7 @@ Date: 2017/07
 #define __MYENTITYMANAGER_H_
 
 #include "MyEntity.h"
-
+#include "StaticEntity.h"
 namespace Simplex
 {
 
@@ -16,6 +16,7 @@ class MyEntityManager
 	typedef MyEntity* PEntity; //MyEntity Pointer
 	uint m_uEntityCount = 0; //number of elements in the list
 	PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
+	std::vector<StaticEntity*> m_mStaticEntities; // vector of static (as in, not moving) MyEntity pointers
 	static MyEntityManager* m_pInstance; // Singleton pointer
 
 	uint m_clock;
@@ -321,6 +322,9 @@ public:
 	OUTPUT: ---
 	*/
 	void UsePhysicsSolver(bool a_bUse = true, uint a_uIndex = -1);
+
+	// Returns the static entites being managed
+	std::vector<StaticEntity*>& GetStaticEntities();
 private:
 	/*
 	Usage: constructor

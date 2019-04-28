@@ -19,7 +19,6 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 	matrixRot4 = rotation;
 }
 
-
 void Simplex::Farmer::Update(float deltaTime) {
 	
 	// m_fCooldownTimer -= deltaTime;
@@ -43,7 +42,6 @@ void Simplex::Farmer::Update(float deltaTime) {
 
 	// set the model matrix to be the new matrix
 	SetModelMatrix(newMat4);
-	
 	
 	/*
 	// SetDir(matrixRot4[2]);
@@ -70,8 +68,6 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
 		vector3 warpPos = this->GetPos();
 
 		warpPos.x = this->GetMapSize() - 10;
-		// warpPos.x = 290;
-
 		this->SetPos(warpPos);
 	}
 	else if (a_pOther->GetType() == "FenceRight") {
@@ -84,7 +80,6 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
 		vector3 warpPos = this->GetPos();
 
 		warpPos.z = this->GetMapSize() - 10;
-		// warpPos.z = 280;
 		this->SetPos(warpPos);
 	}
 	else if (a_pOther->GetType() == "FenceBottom") {
@@ -122,6 +117,13 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
 
         // calculate the final rotation matrix
         matrix4 rotation = rot * rotY;
+
+		// Get the center of the two entities
+		vector3 center = (GetPos() + a_pOther->GetPos()) / 2.0f;
+		// Add to position based on this
+		vector3 offset = (GetPos() - center);
+		offset /= offset.length();
+		SetPos(GetPos() + offset);
 
         // create a new matrix with the postion, rotation, and scale
         matrix4 newMat4 = glm::translate(this->GetPos()) * rotation * glm::scale(vector3(2.0f));
