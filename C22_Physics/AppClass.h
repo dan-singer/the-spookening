@@ -39,7 +39,7 @@ class Application
 	MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 private:
 	//TODO update
-	String m_sProgrammer = "The Spooky Chickens - The Spookening"; //programmer
+	String m_sProgrammer = "The Spooky Chickens - The Spookin'"; //programmer
 
 	static ImGuiObject gui; //GUI object
 	bool m_bGUI_Main = true; //show Main GUI window?
@@ -73,9 +73,9 @@ private:
 	ControllerInput* m_pController[8]; //Controller
 	uint m_uActCont = 0; //Active Controller of the Application
 
-	sf::SoundBuffer m_soundBuffer; //buffer to play sound from
+	sf::SoundBuffer m_soundBuffer; // buffer to play sound from
+	sf::Music* m_soundBGM = nullptr; //background music
 	sf::Sound m_sound; //sound effect
-	sf::Music m_soundBGM; //background music
 
 	Player* m_player;
 	vector3 m_cameraOffset;
@@ -83,6 +83,7 @@ private:
 	const int ENEMY_COUNT = 100; // lower this to improcve but idk
 	const int STATIC_COUNT = 750; // this is the number of static objects getting spawned
 	const float PIPES_PER_SIDE = MAP_SIZE / 10;
+	const float MARGIN = 20;
 	MyOctant* m_pRoot;
 	MyEntity* temp;
 	Egg* toDrop;

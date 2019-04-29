@@ -19,6 +19,9 @@ void Simplex::Player::Update(float deltaTime)
 {
 	m_fCooldownTimer -= deltaTime;
 	m_fgameTimer -= deltaTime; // game timer
+	vector3 pos, scale;
+	glm::decompose(GetModelMatrix(), scale, glm::quat(), pos, vector3(), vector4());
+	SetModelMatrix(glm::translate(pos) * glm::rotate(IDENTITY_M4, m_targetAngle, AXIS_Y) * glm::scale(scale));
 }
 
 void Simplex::Player::DropEgg()
@@ -29,7 +32,7 @@ void Simplex::Player::DropEgg()
 		MyEntityManager* manager = MyEntityManager::GetInstance();
 		Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 		manager->AddEntity(toDrop);
-		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(-1, -10, 0)));
+		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(0, -10, 0)));
 		manager->UsePhysicsSolver(false);
 
 		m_fCooldownTimer = m_fStartingTimer;

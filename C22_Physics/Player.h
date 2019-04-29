@@ -15,6 +15,7 @@ namespace Simplex
 		float m_fgameTimeStart = 60.0f; // 4:45 
 		float m_fgameTimer = m_fgameTimeStart;
 		int m_score = 0;
+		float m_targetAngle;
 		static Player* m_instance;
 	public:
 		Player(String a_sFileName, string type, String a_sUniqueID = "NA");
@@ -27,6 +28,9 @@ namespace Simplex
 		float GetGameTime() { return m_fgameTimer; } // game timer accessor
 		void SetGameTime(float time) { m_fgameTimer = time; }
 		float GetGameTimeStart() { return m_fgameTimeStart; }
+
+		float GetTargetAngle() { return m_targetAngle; }
+		void SetTargetAngle(float angle) { m_targetAngle = angle; }
 		virtual ~Player();
 	};
 }

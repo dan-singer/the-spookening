@@ -72,7 +72,6 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	{
 	default: break;
 	case sf::Keyboard::Space:
-		m_sound.play();
 		m_pEntityMngr->ApplyForce(vector3(0.0f, 1.0f, 0.0f), "Steve");
 		break;
 	case sf::Keyboard::LShift:
@@ -429,25 +428,49 @@ void Application::ProcessKeyboard(void)
 
 #pragma region Character Position
 	float fDelta = m_pSystem->GetDeltaTime(0);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_player->GetPosition().x > 0)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(-20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
+		m_player->SetTargetAngle(glm::radians(270.0f));
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_player->GetPosition().x < MAP_SIZE - MARGIN / 2)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
+		m_player->SetTargetAngle(glm::radians(90.0f));
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_player->GetPosition().z > 0)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(0, 0, -20.0f * fDelta)) * m_player->GetModelMatrix());
+		m_player->SetTargetAngle(glm::radians(180.0f));
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_player->GetPosition().z < MAP_SIZE - MARGIN / 2)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(0, 0, 20.0f * fDelta)) * m_player->GetModelMatrix());
+		m_player->SetTargetAngle(glm::radians(0.0f));
 	}
+
+
+	// Included for 8-directional rotation
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		m_player->SetTargetAngle(glm::radians(225.0f));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		m_player->SetTargetAngle(glm::radians(135.0f));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		m_player->SetTargetAngle(glm::radians(315.0f));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		m_player->SetTargetAngle(glm::radians(45.0f));
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_player->DropEgg();

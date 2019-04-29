@@ -8,8 +8,21 @@ void Application::DrawGUI(void)
 	uint nEmptyLines = 20;
 	for (uint i = 0; i < nEmptyLines; ++i)
 		m_pMeshMngr->PrintLine("");//Add a line on top
-	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), C_YELLOW);
-	
+	//m_pMeshMngr->Print("						");
+	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), C_YELLOW);
+	//m_pMeshMngr->Print("						");
+
+	//m_pMeshMngr->Print("						");
+	// m_pMeshMngr->Print("RenderCalls: ");//Add a line on top
+	// m_pMeshMngr->PrintLine(std::to_string(m_uRenderCallCount), C_YELLOW);
+
+	//m_pMeshMngr->Print("						");
+	// m_pMeshMngr->Print("FPS:");
+	// m_pMeshMngr->PrintLine(std::to_string(m_pSystem->GetFPS()), C_RED);
+
+	// timer UI stuff
+	// m_pMeshMngr->Print("Time Remaining: ");
+	// m_pMeshMngr->PrintLine(std::to_string(m_player->GetGameTime()), C_CYAN);
 #pragma endregion
 
 	//Calculate the window size to know how to draw
@@ -31,6 +44,7 @@ void Application::DrawGUI(void)
 				ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::Separator();
 			ImGui::Text("Control:\n");
+			ImGui::Text("   Enter: Start the Game");
 			ImGui::Text("   Arrows: Move Chicken");
 			ImGui::Text("   Space: Drop Egg");
 			ImGui::Separator();
@@ -39,6 +53,15 @@ void Application::DrawGUI(void)
 				ImGui::Separator();
 				ImGui::Text("Time: %f", Player::GetInstance()->GetGameTime());
 			}
+			ImGui::Separator();
+			ImGui::Text("Octree Controls:\n");
+			ImGui::Text("   Right Shift: Disable");
+			ImGui::Text("   Left Shift: Enable");
+			ImGui::Text("   +/-: Increase/Decrease Level");
+			ImGui::Text("   o: Toggle Display");
+
+
+
 		}
 		ImGui::End();
 	}

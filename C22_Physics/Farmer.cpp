@@ -20,7 +20,7 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 }
 
 void Simplex::Farmer::Update(float deltaTime) {
-	SetPos(vector3(GetPos() + (GetDir() * 1 / 20.0f)));
+	SetPos(vector3(GetPos() + (GetDir() * deltaTime)));
 
 	// get the angle between the x and z and create a rotation matrix around the Y axis
 	double angle = std::atan2(GetDir().x, GetDir().z);
