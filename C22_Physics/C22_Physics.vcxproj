@@ -116,6 +116,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClCompile Include="MySolver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StaticEntity.cpp" />
+    <ClCompile Include="TimedRemoval.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\imgui\imconfig.h" />
@@ -136,6 +137,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClInclude Include="MySolver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="StaticEntity.h" />
+    <ClInclude Include="TimedRemoval.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />
