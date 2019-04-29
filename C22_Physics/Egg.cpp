@@ -25,8 +25,8 @@ void Simplex::Egg::Update(float deltaTime)
 }
 
 
-Egg::~Egg()
-{
+Egg::~Egg() {
+	cout << "Egg destructor!\n";
 }
 
 void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
@@ -36,6 +36,9 @@ void Simplex::Egg::ResolveCollision(MyEntity* a_pOther)
 	if (a_pOther->GetUniqueID() == "ground") {
 		m_isMoving = false;
 		m_isBeingDestroyed = true;
+
+		delete farmer;
+		farmer = nullptr;
 	}
 	else if(farmer){
 

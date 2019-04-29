@@ -8,21 +8,8 @@ void Application::DrawGUI(void)
 	uint nEmptyLines = 20;
 	for (uint i = 0; i < nEmptyLines; ++i)
 		m_pMeshMngr->PrintLine("");//Add a line on top
-	//m_pMeshMngr->Print("						");
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), C_YELLOW);
-	//m_pMeshMngr->Print("						");
-
-	//m_pMeshMngr->Print("						");
-	// m_pMeshMngr->Print("RenderCalls: ");//Add a line on top
-	// m_pMeshMngr->PrintLine(std::to_string(m_uRenderCallCount), C_YELLOW);
-
-	//m_pMeshMngr->Print("						");
-	// m_pMeshMngr->Print("FPS:");
-	// m_pMeshMngr->PrintLine(std::to_string(m_pSystem->GetFPS()), C_RED);
-
-	// timer UI stuff
-	// m_pMeshMngr->Print("Time Remaining: ");
-	// m_pMeshMngr->PrintLine(std::to_string(m_player->GetGameTime()), C_CYAN);
+	
 #pragma endregion
 
 	//Calculate the window size to know how to draw
@@ -44,12 +31,6 @@ void Application::DrawGUI(void)
 				ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::Separator();
 			ImGui::Text("Control:\n");
-			// ImGui::Text("   Arrows: Movement\n");
-			// ImGui::Text("	 F1: Perspective\n");
-			// ImGui::Text("	 F2: Orthographic X\n");
-			// ImGui::Text("	 F3: Orthographic Y\n");
-			// ImGui::Text("	 F4: Orthographic Z\n");
-			// ImGui::Separator();
 			ImGui::Text("   Arrows: Move Chicken");
 			ImGui::Text("   Space: Drop Egg");
 			ImGui::Separator();
@@ -280,11 +261,7 @@ void Application::NewFrame()
 	GLint m_viewport[4];
 	glGetIntegerv(GL_VIEWPORT, m_viewport);
 	io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
-	/*
-	io.DisplayFramebufferScale =
-	ImVec2(	width > 0 ? ((float)m_viewport[2] / width) : 0,
-	height > 0 ? ((float)m_viewport[3] / height) : 0);
-	*/
+	
 	// Setup time step
 	float fDelta = m_pSystem->GetDeltaTime(gui.m_nClock);
 	io.DeltaTime = fDelta;

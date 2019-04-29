@@ -163,7 +163,6 @@ void Application::ProcessJoystickConnected(uint nController)
 		int nVendorID = joyID.vendorId;
 		int nProductID = joyID.productId;
 		m_pController[nController] = new ControllerInput(nVendorID, nProductID);
-		//m_pWindow->setJoystickThreshold(7);
 		++m_uControllerCount;
 	}
 }

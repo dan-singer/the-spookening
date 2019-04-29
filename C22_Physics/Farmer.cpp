@@ -20,10 +20,6 @@ Farmer::Farmer(String a_sFileName, string type, String a_sUniqueID) : MyEntity(a
 }
 
 void Simplex::Farmer::Update(float deltaTime) {
-	
-	// m_fCooldownTimer -= deltaTime;
-	// update the position
-	// position = vector3(position + (direction * 1 / 20.0f));
 	SetPos(vector3(GetPos() + (GetDir() * 1 / 20.0f)));
 
 	// get the angle between the x and z and create a rotation matrix around the Y axis
@@ -42,23 +38,10 @@ void Simplex::Farmer::Update(float deltaTime) {
 
 	// set the model matrix to be the new matrix
 	SetModelMatrix(newMat4);
-	
-	/*
-	// SetDir(matrixRot4[2]);
-
-	// update the position
-	// position = vector3(position + (direction * 1 / 20.0f));
-	SetPos(vector3(GetPos() + (GetDir() * deltaTime * 5)));
-
-	// create a new matrix with the postion, rotation, and scale
-	matrix4 newMat4 = glm::translate(GetPos()) * matrixRot4 * glm::scale(GetScale());
-
-	// set the model matrix to be the new matrix
-	SetModelMatrix(newMat4);
-	*/
 }
 
 Farmer::~Farmer() {
+	cout << "Farmer destructor!\n";
 }
 
 void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
@@ -103,16 +86,6 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
         // get the angle counter angle and create a rotation matrix around the Z axis
         float angleY = -std::asin(a_pOther->GetDir().y);
 
-        // cout << "AngleY2: " << angleY << endl;
-
-		/*
-        if (angle == 90)
-        {
-            angleY = 180;
-            // angleY = -270;
-        }
-		*/
-
         matrix4 rotY = glm::rotate((angleY / 2.0f), glm::tvec3<float>(0.0, 0.0, 1.0));
 
         // calculate the final rotation matrix
@@ -127,8 +100,6 @@ void Simplex::Farmer::ResolveCollision(MyEntity* a_pOther) {
 
         // create a new matrix with the postion, rotation, and scale
         matrix4 newMat4 = glm::translate(this->GetPos()) * rotation * glm::scale(vector3(2.0f));
-        
-		// matrixRot4 = rotation;
 
         // rotates the direction
         glm::vec3 newDirection = glm::vec4(this->GetDir(), 1) * rot;

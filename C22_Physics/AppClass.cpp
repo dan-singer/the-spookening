@@ -7,11 +7,10 @@
 using namespace std;
 using namespace Simplex;
 
-
-
 void Application::InitVariables(void) {
+	
 	// Preload egg, bacon
-	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
+	toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
@@ -26,7 +25,7 @@ void Application::InitVariables(void) {
 	m_cameraOffset = vector3(0, 6, 0); // this was set to 6
 
 	// ground
-	MyEntity* temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
+	temp = m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "", "ground");
 	temp->SetType("Ground");
 
 	vector3 v3Position = vector3(-5, -10, -5);
@@ -40,34 +39,32 @@ void Application::InitVariables(void) {
 	v3Position = vector3(MAP_SIZE/2, 200, MAP_SIZE/2 - 20);
 	m4Position = glm::translate(v3Position);
 	endScreen->SetModelMatrix((glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)));
-	//m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(1)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X)); // this is the rotation needed for the title screen
 
 	temp = m_pEntityMngr->AddEntity("GameScreens\\black.obj", "", "BlackBox");
 	v3Position = vector3(MAP_SIZE/2, 300, MAP_SIZE/2);
-	//m4Position = glm::translate(v3Position);
 	m_pEntityMngr->SetModelMatrix(glm::translate(v3Position) * glm::scale(vector3(10)));
 
 	// left wall of "fences"
 	for (int i = 0; i < PIPES_PER_SIDE; i++) {
-		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceLeft", "FenceLeft");
+		m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceLeft", "FenceLeft");
 		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_Z));
 	}
 
 	// right wall of fences
 	for (int i = 0; i < PIPES_PER_SIDE; i++) {
-		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceRight", "FenceRight");
+		m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceRight", "FenceRight");
 		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(MAP_SIZE - 5, 0, i * 10)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_Z));
 	}
 
 	// top wall of fences
 	for (int i = 0; i < PIPES_PER_SIDE; i++) {
-		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceTop", "FenceTop");
+		m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceTop", "FenceTop");
 		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(-90.0f), AXIS_X));
 	}
 
 	// bottom wall of fences
 	for (int i = 0; i < PIPES_PER_SIDE; i++) {
-		MyEntity* otherTemp = m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceBottom", "FenceBottom");
+		m_pEntityMngr->AddEntity("Mario\\WarpPipe.obj", "FenceBottom", "FenceBottom");
 		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(i * 10, 0, MAP_SIZE - 5)) * glm::scale(vector3(2.5)) * glm::rotate(IDENTITY_M4, glm::radians(90.0f), AXIS_X));
 	}
 
@@ -79,19 +76,19 @@ void Application::InitVariables(void) {
 		// create an enemy
 		SpawnType spawnType = static_cast<SpawnType>(rand() % (int)SpawnType::NUM_TYPES);
 
-		MyEntity* temp = nullptr;
+		// otherTemp = nullptr;
 		if (spawnType == SpawnType::Farmer) {
-			temp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(numFarmers));
+			otherTemp = new Farmer("Minecraft\\Steve.obj", "Farmer", "Farmer_" + std::to_string(numFarmers));
 			numFarmers++;
 		}
 		else if (spawnType == SpawnType::Pig) {
-			temp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(numPigs));
+			otherTemp = new Farmer("Minecraft\\Pig.obj", "Pig", "Pig_" + std::to_string(numPigs));
 			numPigs++;
 		}
 
 		// create a random position
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
-		temp->SetPos(v3Position);
+		otherTemp->SetPos(v3Position);
 		
 		// create a random direction
 		vector3 v3Direction = vector3(rand() % 2, 0, rand() % 2);
@@ -104,14 +101,10 @@ void Application::InitVariables(void) {
 		}
 
 		// set the direction
-		temp->SetDir(v3Direction);
-		temp->SetMapSize(MAP_SIZE);
-
-		Farmer* farmer = dynamic_cast<Farmer*>(temp);
-		if (farmer) {
-			farmer->calcRot();
-		}
-		m_pEntityMngr->AddEntity(temp);
+		otherTemp->SetDir(v3Direction);
+		otherTemp->SetMapSize(MAP_SIZE);
+	
+		m_pEntityMngr->AddEntity(otherTemp);
 	}
 
 	
@@ -130,12 +123,12 @@ void Application::InitVariables(void) {
 		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
 		spawnedStaticObject->SetPos(v3Position);
 		m_pEntityMngr->AddEntity(spawnedStaticObject);
+		
 	}
 	
 	m_pEntityMngr->Update();
 	m_pRoot = new MyOctant(m_uOctantLevels,5); // also please dont touch this, begging you yadda yadda
 	
-
 }
 
 void Application::Update(void) {
@@ -145,20 +138,6 @@ void Application::Update(void) {
 		m_pSystem->Update();
 
 		m_pCameraMngr->SetFOV(45);
-
-		
-		// need to turn off the octree 
-		//if (m_bLoadOctree) {
-		//	if (m_pRoot) {
-		//		delete m_pRoot;
-		//		m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
-		//	}
-		//}
-		//else {
-		//	delete m_pRoot;
-		//	m_pRoot = new MyOctant(0, 5);
-		//}
-		
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
@@ -231,9 +210,13 @@ void Application::Display(void) {
 	m_pWindow->display();
 }
 void Application::Release(void) {
+	// clearing some leaks
+	delete toDrop;
+	delete m_pRoot;
+
 	//Release MyEntityManager
 	MyEntityManager::ReleaseInstance();
-
+	
 	//release GUI
 	ShutdownGUI();
 }
