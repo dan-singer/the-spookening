@@ -53,6 +53,15 @@ void Application::DrawGUI(void)
 				ImGui::Separator();
 				ImGui::Text("Time: %f", Player::GetInstance()->GetGameTime());
 			}
+			ImGui::Separator();
+			ImGui::Text("Octree Controls:\n");
+			ImGui::Text("   Right Shift: Disable");
+			ImGui::Text("   Left Shift: Enable");
+			ImGui::Text("   +/-: Increase/Decrease Level");
+			ImGui::Text("   o: Toggle Display");
+
+
+
 		}
 		ImGui::End();
 	}
