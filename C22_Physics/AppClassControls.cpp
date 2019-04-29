@@ -429,22 +429,22 @@ void Application::ProcessKeyboard(void)
 
 #pragma region Character Position
 	float fDelta = m_pSystem->GetDeltaTime(0);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_player->GetPosition().x > 0)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(-20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_player->GetPosition().x < MAP_SIZE - MARGIN / 2)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(20.0f * fDelta, 0, 0)) * m_player->GetModelMatrix());
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_player->GetPosition().z > 0)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(0, 0, -20.0f * fDelta)) * m_player->GetModelMatrix());
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_player->GetPosition().z < MAP_SIZE - MARGIN / 2)
 	{
 		m_player->SetModelMatrix(glm::translate(vector3(0, 0, 20.0f * fDelta)) * m_player->GetModelMatrix());
 	}
