@@ -3,6 +3,8 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
+//#include <nanogui/nanogui.h>
+
 #include "StaticEntity.h"
 using namespace std;
 using namespace Simplex;
@@ -19,15 +21,17 @@ void Application::InitVariables(void) {
 	// Preload egg, bacon
 	Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
+	MyEntity* grave = new MyEntity("Grave\\grave.obj", "");
+
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
-	m_player = new Player("Chicken\\gallina.fbx", "", "Player");
+	m_player = new Player("Chicken\\chicken.obj", "", "Player");
 	m_pEntityMngr->AddEntity(m_player);
 
 	m_pEntityMngr->UsePhysicsSolver(false);
 
-	float playerScale = 0.01f;
+	float playerScale = 0.05f;
 	m_player->SetModelMatrix(glm::translate(vector3(MAP_SIZE/2, 80, MAP_SIZE/2)) * glm::scale(vector3(playerScale,playerScale,playerScale)) * glm::rotate(IDENTITY_M4, glm::radians(180.0f), AXIS_Y));
 	m_cameraOffset = vector3(0, 6, 0); // this was set to 6
 
@@ -133,7 +137,8 @@ void Application::InitVariables(void) {
 
 		// do this within a check for octree collisions stuff
 		// set positions
-		vector3 v3Position = vector3(rand() % (int)MAP_SIZE, 1.1, rand() % (int)MAP_SIZE);
+
+		vector3 v3Position = vector3(rand() % (int)(MAP_SIZE - MARGIN * 2) + MARGIN, 1.1, rand() % (int)(MAP_SIZE - MARGIN * 2));
 		spawnedStaticObject->SetPos(v3Position);
 		m_pEntityMngr->AddEntity(spawnedStaticObject);
 	}
@@ -141,7 +146,8 @@ void Application::InitVariables(void) {
 	m_pEntityMngr->Update();
 	m_pRoot = new MyOctant(m_uOctantLevels,5); // also please dont touch this, begging you yadda yadda
 	
-
+	//nanogui::Button* b;
+	//nanogui::Button* b = new nanogui::Button(m_pWindow->getSystemHandle());
 }
 
 void Application::Update(void) {
@@ -151,20 +157,6 @@ void Application::Update(void) {
 		m_pSystem->Update();
 
 		m_pCameraMngr->SetFOV(45);
-
-		
-		// need to turn off the octree 
-		//if (m_bLoadOctree) {
-		//	if (m_pRoot) {
-		//		delete m_pRoot;
-		//		m_pRoot = new MyOctant(5, 5); // for the love of god please leave this alone im begging you
-		//	}
-		//}
-		//else {
-		//	delete m_pRoot;
-		//	m_pRoot = new MyOctant(0, 5);
-		//}
-		
 
 		vector3 camPosition = m_player->GetPosition() + m_cameraOffset;
 
@@ -217,7 +209,7 @@ void Application::Display(void) {
 	ClearScreen();
 
 	// draw a skybox
-	m_pMeshMngr->AddSkyboxToRenderList();
+	m_pMeshMngr->AddSkyboxToRenderList("SpookySky.png");
 
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
@@ -241,7 +233,6 @@ void Application::Release(void) {
 	MyEntityManager::ReleaseInstance();
 
 	// clean up pointers
-	m_soundBGM = nullptr;
 	delete m_soundBGM;
 
 	//release GUI

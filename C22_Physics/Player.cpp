@@ -29,7 +29,7 @@ void Simplex::Player::DropEgg()
 		MyEntityManager* manager = MyEntityManager::GetInstance();
 		Egg* toDrop = new Egg("Egg\\egg.fbx", "");
 		manager->AddEntity(toDrop);
-		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(-1, -10, 0)));
+		manager->SetModelMatrix(glm::translate(GetPosition() + vector3(0, -10, 0)));
 		manager->UsePhysicsSolver(false);
 
 		m_fCooldownTimer = m_fStartingTimer;

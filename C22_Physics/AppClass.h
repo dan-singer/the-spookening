@@ -84,6 +84,7 @@ private:
 	const int ENEMY_COUNT = 100; // lower this to improcve but idk
 	const int STATIC_COUNT = 750; // this is the number of static objects getting spawned
 	const float PIPES_PER_SIDE = MAP_SIZE / 10;
+	const float MARGIN = 20;
 	MyOctant* m_pRoot;
 
 	bool m_displayOctree = false;
