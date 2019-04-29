@@ -284,11 +284,7 @@ void Application::NewFrame()
 	GLint m_viewport[4];
 	glGetIntegerv(GL_VIEWPORT, m_viewport);
 	io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
-	/*
-	io.DisplayFramebufferScale =
-	ImVec2(	width > 0 ? ((float)m_viewport[2] / width) : 0,
-	height > 0 ? ((float)m_viewport[3] / height) : 0);
-	*/
+	
 	// Setup time step
 	float fDelta = m_pSystem->GetDeltaTime(gui.m_nClock);
 	io.DeltaTime = fDelta;

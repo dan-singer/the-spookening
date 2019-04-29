@@ -79,13 +79,15 @@ private:
 
 	Player* m_player;
 	vector3 m_cameraOffset;
-	MyEntity* m_endScreen;
 	const float MAP_SIZE = 300; // this always should be divisible by 10 or Nick will be REAL BIG SAD
 	const int ENEMY_COUNT = 100; // lower this to improcve but idk
 	const int STATIC_COUNT = 750; // this is the number of static objects getting spawned
 	const float PIPES_PER_SIDE = MAP_SIZE / 10;
 	const float MARGIN = 20;
 	MyOctant* m_pRoot;
+	MyEntity* temp;
+	Egg* toDrop;
+	MyEntity* otherTemp;
 
 	bool m_displayOctree = false;
 	bool m_bLoadOctree = false;
