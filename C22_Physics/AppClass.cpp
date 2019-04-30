@@ -3,7 +3,6 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
-//#include <nanogui/nanogui.h>
 
 #include "StaticEntity.h"
 using namespace std;
