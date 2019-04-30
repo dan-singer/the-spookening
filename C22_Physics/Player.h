@@ -10,8 +10,11 @@ namespace Simplex
 	class Player : public MyEntity
 	{
 	private:
+		// timer for launching eggs
 		float m_fCooldownTimer = 0.0f;
 		float m_fStartingTimer = 1.0f;
+
+		// game timer
 		float m_fgameTimeStart = 60.0f; // 4:45 
 		float m_fgameTimer = m_fgameTimeStart;
 		int m_score = 0;

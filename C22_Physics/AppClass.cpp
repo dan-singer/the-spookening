@@ -16,7 +16,7 @@ void Application::InitVariables(void) {
 	m_soundBGM->setLoop(true);
 	m_soundBGM->play();
 
-	// Preload egg, bacon
+	// Preload egg, bacon, and grave
 	toDrop = new Egg("Egg\\egg.fbx", "");
 	MyEntity entity("Breakfast\\model.obj", "");
 	MyEntity* grave = new MyEntity("Grave\\grave.obj", "");
@@ -24,6 +24,7 @@ void Application::InitVariables(void) {
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
+	// create player
 	m_player = new Player("Chicken\\chicken.obj", "", "Player");
 	m_pEntityMngr->AddEntity(m_player);
 

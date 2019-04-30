@@ -4,7 +4,7 @@
 #include "MyEntity.h"
 
 namespace Simplex {
-
+	// class for grave and breakfast objects that get destroyed after timer is finished
 	class TimedRemoval: public MyEntity {
 
 	private:

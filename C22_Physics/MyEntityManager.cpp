@@ -177,10 +177,10 @@ void Simplex::MyEntityManager::Update(void)
 		fDelta = 1 / 12.0f;
 	}
 
+	// clear collisions and upate entity list
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		m_mEntityArray[i]->ClearCollisionList();
-		
 		m_mEntityArray[i]->Update(fDelta);
 	}
 	

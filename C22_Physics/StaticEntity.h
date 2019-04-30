@@ -5,7 +5,7 @@
 #include "MyEntity.h"
 
 namespace Simplex {
-
+	// class for static objects like the rocks
 	class StaticEntity : public MyEntity
 	{
 	public:
