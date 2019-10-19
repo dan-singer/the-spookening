@@ -1,2 +1,2 @@
-# Simplex_2178
-Repository for DSA2 Summer 2017
+# The Spookening
+A top-down mini-game where you must drop eggs on pigs in order to get a high score. Built with OpenGL and C++.
